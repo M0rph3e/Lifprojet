@@ -1,0 +1,1 @@
+#La classe cursor represente la case choisi par le jouer
