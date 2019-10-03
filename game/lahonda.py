@@ -4,6 +4,9 @@ import pygame
 import time
 import os
 
+WIDTH = 500
+HEIGHT = 500
+
 #Variables globales
 FPS = 60
 
@@ -12,11 +15,11 @@ def main():
 	
 	pygame.display.set_caption("Lahonda")
 
-	screen = pygame.display.set_mode((400,300))
+	screen = pygame.display.set_mode((HEIGHT, WIDTH))
 
 	clock = pygame.time.Clock()
 
-	map = Map(400, 300, 5)
+	map = Map(20, 20)
 
 	map.draw_grid(screen)
 
@@ -43,4 +46,4 @@ def main():
 #Lancement du main
 if __name__ == "__main__":
 	main()
-	os.system("pause")
+	#os.system("pause")
