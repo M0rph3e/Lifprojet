@@ -1,15 +1,27 @@
 #Le programme principal du jeu
-
+from classes.map import Map
 import pygame
 import time
+import os
+
+WIDTH = 500
+HEIGHT = 500
 
 #Variables globales
 FPS = 60
 
 def main():
 	pygame.init()
-	screen = pygame.display.set_mode((400,300))
+	
+	pygame.display.set_caption("Lahonda")
+
+	screen = pygame.display.set_mode((HEIGHT, WIDTH))
+
 	clock = pygame.time.Clock()
+
+	map = Map(20, 20)
+
+	map.draw_grid(screen)
 
 	done = False
 	#Boucle principale de jeu
@@ -28,9 +40,10 @@ def main():
 
 
 		pygame.display.flip()
-		
+	
+	pygame.quit()
 
 #Lancement du main
 if __name__ == "__main__":
 	main()
-	pygame.quit()
+	#os.system("pause")
