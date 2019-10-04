@@ -6,6 +6,9 @@ import os
 
 WIDTH = 500
 HEIGHT = 500
+CELLWIDTH = 20
+CELLHEIGHT = 20
+
 
 #Variables globales
 FPS = 60
@@ -19,13 +22,16 @@ def main():
 
 	clock = pygame.time.Clock()
 
-	map = Map(20, 20)
+	map = Map(CELLWIDTH, CELLHEIGHT)
 
-	map.draw_grid(screen)
+	
 
 	done = False
 	#Boucle principale de jeu
 	while not done:
+
+		map.draw_grid(screen)
+		
 		#Ceci permet de limiter le FPS dans jeu
 		clock.tick(FPS)
 
@@ -38,6 +44,15 @@ def main():
 					if event.key == pygame.K_ESCAPE:
 						done = True
 
+
+				if (event.type == pygame.MOUSEBUTTONDOWN):
+            		# get the position of the mouse
+					mpos_x, mpos_y = event.pos
+					col = mpos_x // (CELLWIDTH) # which cell is the mouse clicking
+					row = mpos_y // (CELLHEIGHT) # ^ same
+					map.grid[row][col] = 1
+					print ("row : ",row) 
+					print ("col : ",col)
 
 		pygame.display.flip()
 	
