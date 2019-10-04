@@ -8,6 +8,9 @@ import os
 
 WIDTH = 500
 HEIGHT = 500
+CELLWIDTH = 20
+CELLHEIGHT = 20
+
 
 #Variables globales
 FPS = 60
@@ -23,14 +26,18 @@ def main():
 	pawn1 = Pawn(18,10)
 	pawn1.draw_pawn(screen, HEIGHT, WIDTH)
 
-	map = Map(20, 20)
-	map.draw_grid(screen)
+	map = Map(CELLWIDTH, CELLHEIGHT)
+
+	
 
 
 
 	done = False
 	#Boucle principale de jeu
 	while not done:
+
+		map.draw_grid(screen)
+		
 		#Ceci permet de limiter le FPS dans jeu
 		clock.tick(FPS)
 		map.draw_grid(screen)
@@ -50,6 +57,15 @@ def main():
 					if event.key == pygame.K_f:
 						pawn1.move(15,10)
 
+
+				if (event.type == pygame.MOUSEBUTTONDOWN):
+            		# get the position of the mouse
+					mpos_x, mpos_y = event.pos
+					col = mpos_x // (CELLWIDTH) # which cell is the mouse clicking
+					row = mpos_y // (CELLHEIGHT) # ^ same
+					map.grid[row][col] = 1
+					print ("row : ",row) 
+					print ("col : ",col)
 
 		pygame.display.flip()
 	
