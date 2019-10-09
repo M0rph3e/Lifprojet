@@ -23,7 +23,7 @@ def main():
 	screen = pygame.display.set_mode((HEIGHT, WIDTH))
 
 	clock = pygame.time.Clock()
-	pawn1 = Pawn(18,10)
+	pawn1 = Pawn(18,10,10,1)
 	pawn1.draw_pawn(screen, HEIGHT, WIDTH)
 
 	map = Map(CELLWIDTH, CELLHEIGHT)
@@ -63,7 +63,7 @@ def main():
 					mpos_x, mpos_y = event.pos
 					col = mpos_x // (CELLWIDTH) # which cell is the mouse clicking
 					row = mpos_y // (CELLHEIGHT) # ^ same
-					map.grid[row][col] = 1
+					map.grid[col][row] = 1
 					print ("row : ",row) 
 					print ("col : ",col)
 
