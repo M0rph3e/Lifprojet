@@ -6,8 +6,8 @@ import pygame
 import time
 import os
 
-WIDTH = 500
-HEIGHT = 500
+WIDTH = 400 
+HEIGHT = 400
 CELLWIDTH = 20
 CELLHEIGHT = 20
 
