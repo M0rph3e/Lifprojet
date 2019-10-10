@@ -59,13 +59,38 @@ def main():
 
 
 				if (event.type == pygame.MOUSEBUTTONDOWN):
-            		# get the position of the mouse
+	
+					# get the position of the mouse
 					mpos_x, mpos_y = event.pos
 					col = mpos_x // (CELLWIDTH) # which cell is the mouse clicking
-					row = mpos_y // (CELLHEIGHT) # ^ same
-					map.grid[row][col] = 1
-					print ("row : ",row) 
-					print ("col : ",col)
+					row = mpos_y // (CELLHEIGHT) # ^ same			
+
+					if row >= 0 and col >= 0:
+						try:
+							map.grid[col][row] = 1
+							print ("row : ",row) 
+							print ("col : ",col)
+
+						except IndexError:
+							pass
+
+				if (event.type == pygame.MOUSEBUTTONUP):
+	
+					# get the position of the mouse
+					mpos_x, mpos_y = event.pos
+					col = mpos_x // (CELLWIDTH) # which cell is the mouse clicking
+					row = mpos_y // (CELLHEIGHT) # ^ same			
+
+					if row >= 0 and col >= 0:
+						try:
+							map.grid[col][row] = 0
+							print ("row : ",row) 
+							print ("col : ",col)
+
+						except IndexError:
+							pass
+
+					
 
 		pygame.display.flip()
 	
