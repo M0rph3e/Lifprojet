@@ -79,7 +79,6 @@ def main():
 					# get the position of the mouse
 					mpos_x, mpos_y = event.pos
 					col = mpos_x // (CELLWIDTH) # which cell is the mouse clicking
-<<<<<<< HEAD
 					row = mpos_y // (CELLHEIGHT) # ^ same			
 
 					if row >= 0 and col >= 0:
@@ -92,12 +91,6 @@ def main():
 							pass
 
 					
-=======
-					row = mpos_y // (CELLHEIGHT) # ^ same
-					map.grid[col][row] = 1
-					print ("row : ",row) 
-					print ("col : ",col)
->>>>>>> 702729f3aa24dc20c08db8ee0d1e56d1247689b3
 
 		pygame.display.flip()
 	
