@@ -6,8 +6,8 @@ import pygame
 import time
 import os
 
-WIDTH = 500
-HEIGHT = 500
+WIDTH = 400 
+HEIGHT = 400
 CELLWIDTH = 20
 CELLHEIGHT = 20
 
@@ -23,7 +23,7 @@ def main():
 	screen = pygame.display.set_mode((HEIGHT, WIDTH))
 
 	clock = pygame.time.Clock()
-	pawn1 = Pawn(18,10)
+	pawn1 = Pawn(18,10,10,1)
 	pawn1.draw_pawn(screen, HEIGHT, WIDTH)
 
 	map = Map(CELLWIDTH, CELLHEIGHT)
@@ -79,6 +79,7 @@ def main():
 					# get the position of the mouse
 					mpos_x, mpos_y = event.pos
 					col = mpos_x // (CELLWIDTH) # which cell is the mouse clicking
+<<<<<<< HEAD
 					row = mpos_y // (CELLHEIGHT) # ^ same			
 
 					if row >= 0 and col >= 0:
@@ -91,6 +92,12 @@ def main():
 							pass
 
 					
+=======
+					row = mpos_y // (CELLHEIGHT) # ^ same
+					map.grid[col][row] = 1
+					print ("row : ",row) 
+					print ("col : ",col)
+>>>>>>> 702729f3aa24dc20c08db8ee0d1e56d1247689b3
 
 		pygame.display.flip()
 	
