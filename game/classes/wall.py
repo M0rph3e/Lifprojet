@@ -8,3 +8,6 @@ class Wall:
 
     def draw(self,screen,x,y,height,width):
         pygame.draw.rect(screen, WALL, (y * width, x * height, width, height))
+
+    def get_traversable(self):
+        return False
