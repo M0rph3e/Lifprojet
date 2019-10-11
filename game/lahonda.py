@@ -24,7 +24,6 @@ def main():
 
 	clock = pygame.time.Clock()
 	pawn1 = Pawn(18,10,10,1)
-	pawn1.draw_pawn(screen, HEIGHT, WIDTH)
 
 	map = Map(CELLWIDTH, CELLHEIGHT)
 
