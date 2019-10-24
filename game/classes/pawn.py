@@ -1,5 +1,6 @@
 #La classe Pawn represente les personnages controllables par le jouer ou par l'AI
 import pygame
+from .colors import * 
 class Pawn:
 	def __init__(self, x, y, att, defense):
 		self.x = x
@@ -14,9 +15,8 @@ class Pawn:
 		self.x = x2
 		self.y = y2
 
-	def draw_pawn(self, screen, height, width):
-		color = (0, 255, 0)		
-		pygame.draw.rect(screen, color, (self.x * height, self.y * width, width, height))
+	def draw_pawn(self, screen, height, width):	
+		pygame.draw.rect(screen, UNIT, (self.x * height, self.y * width, width, height))
 
 	def _get_position(self):
 		return (self.x,self.y)
