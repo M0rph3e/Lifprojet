@@ -1,6 +1,7 @@
 #Le programme principal du jeu
 from classes.map import Map
 from classes.pawn import Pawn
+from classes.cursor import Cursor
 
 import pygame
 import time
@@ -26,9 +27,11 @@ def main():
 	pawn1 = Pawn(18,10,10,1)
 	pawn1.draw_pawn(screen, HEIGHT, WIDTH)
 
+	tabPawn = [pawn1]
+
 	map = Map(CELLWIDTH, CELLHEIGHT)
 
-	
+	cursor = Cursor()
 
 
 
@@ -55,40 +58,16 @@ def main():
 
 				if (event.type == pygame.KEYDOWN):
 					if event.key == pygame.K_f:
-						pawn1.move(15,10)
+						pawn1.move(pawn1.x-1,pawn1.y)
 
 
 				if (event.type == pygame.MOUSEBUTTONDOWN):
-	
 					# get the position of the mouse
 					mpos_x, mpos_y = event.pos
-					col = mpos_x // (CELLWIDTH) # which cell is the mouse clicking
-					row = mpos_y // (CELLHEIGHT) # ^ same			
+					cursor.setPosCursor(mpos_x,mpos_y)
+					cursor.isPlayer(tabPawn)
+					cursor.displayCursorPos()
 
-					if row >= 0 and col >= 0:
-						try:
-							map.grid[col][row] = 1
-							print ("row : ",row) 
-							print ("col : ",col)
-
-						except IndexError:
-							pass
-
-				if (event.type == pygame.MOUSEBUTTONUP):
-	
-					# get the position of the mouse
-					mpos_x, mpos_y = event.pos
-					col = mpos_x // (CELLWIDTH) # which cell is the mouse clicking
-					row = mpos_y // (CELLHEIGHT) # ^ same			
-
-					if row >= 0 and col >= 0:
-						try:
-							map.grid[col][row] = 0
-							print ("row : ",row) 
-							print ("col : ",col)
-
-						except IndexError:
-							pass
 
 					
 
