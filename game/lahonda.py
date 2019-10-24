@@ -2,6 +2,7 @@
 from classes.map import Map
 from classes.pawn import Pawn
 from classes.cursor import Cursor
+from classes.colors import * 
 
 import pygame
 import time
