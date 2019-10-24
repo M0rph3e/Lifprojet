@@ -66,6 +66,8 @@ def main():
 					cursor.setPosCursor(mpos_x,mpos_y)
 					cursor.isPlayer(tabPawn)
 					cursor.displayCursorPos()
+					cursor.isWall(map)
+					print('')
 
 
 					
