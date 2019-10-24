@@ -1,4 +1,4 @@
 # Prerequisites
 *.pyc
-/game/classes/__pycache__
+game/classes/__pycache__
 
