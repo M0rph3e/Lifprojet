@@ -14,6 +14,14 @@ class Pawn:
 	def move(self, x2, y2):
 		self.x = x2
 		self.y = y2
+		#if self.x < x2:
+		#		self.x += 1
+		#elif self.x > x2:
+		#		self.x -= 1
+		#if self.y < y2:
+		#		self.y += 1
+		#elif self.y > y2:
+		#		self.y -= 1
 
 	def draw_pawn(self, screen, height, width):	
 		pygame.draw.rect(screen, UNIT, (self.x * height, self.y * width, width, height))

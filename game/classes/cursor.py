@@ -29,25 +29,29 @@ class Cursor:
     def isPlayer(self, tabPlayer):
         for player in tabPlayer:
             if player.x == self.col and player.y == self.row:
-                self.pawn = True
-                print('\o/ Player \o/')
-                break
+                self.pawn = player
+                print('# Player #')
+                return True
             else:
                 print('# No Player #')
         if self.pawn == None:
             self.pawn = False
+            return False
 
-    def isWall(self, map):
+    def isGround(self, map):
         if map.grid[self.col][self.row].get_traversable():
             self.wall=False
             print("|| Ground ||")
+            return True
         else:
-            self.wall=True 
-            print('|| Wall ||')
-            
+            self.wall=True
+            print('|| Wall ||') 
+            return False
+
     def displayCursorPos(self):
         print('ROW : ', self.row)
         print('COL : ', self.col)
+
     
 
 

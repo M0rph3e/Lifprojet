@@ -29,9 +29,13 @@ def main():
 
 	tabPawn = [pawn1]
 
+	player=None
+
 	map = Map(CELLWIDTH, CELLHEIGHT)
 
-	cursor = Cursor()
+	cursorMain = Cursor()
+	cursorPlayer = Cursor()
+	cursorCase = Cursor()
 
 
 
@@ -64,10 +68,19 @@ def main():
 				if (event.type == pygame.MOUSEBUTTONDOWN):
 					# get the position of the mouse
 					mpos_x, mpos_y = event.pos
-					cursor.setPosCursor(mpos_x,mpos_y)
-					cursor.isPlayer(tabPawn)
-					cursor.displayCursorPos()
-					cursor.isWall(map)
+					cursorMain.setPosCursor(mpos_x,mpos_y)
+					if cursorMain.isPlayer(tabPawn):
+						print('PLAYER SELECTED')
+						cursorPlayer=cursorMain
+						player=cursorPlayer.pawn
+					if cursorMain.isGround(map) and not cursorMain.isPlayer(tabPawn):
+						cursorCase=cursorMain
+						if player!=None:
+							#while player.x != cursorCase.col and player.y != cursorCase.row:
+							player.move(cursorCase.col,cursorCase.row)
+							#time.sleep(0.25)
+							player=None
+							#cursor1.displayCursorPos()
 					print('')
 
 
