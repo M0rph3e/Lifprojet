@@ -76,10 +76,14 @@ def main():
 					if cursorMain.isGround(map) and not cursorMain.isPlayer(tabPawn):
 						cursorCase=cursorMain
 						if player!=None:
-							#while player.x != cursorCase.col and player.y != cursorCase.row:
-							player.move(cursorCase.col,cursorCase.row)
-							#time.sleep(0.25)
+							while player.x != cursorCase.col or player.y != cursorCase.row:
+								player.move(cursorCase.col,cursorCase.row)
+								map.draw_grid(screen)
+								player.draw_pawn(screen, 20, 20)
+								time.sleep(0.5)
+								pygame.display.flip()
 							player=None
+							
 							#cursor1.displayCursorPos()
 					print('')
 
