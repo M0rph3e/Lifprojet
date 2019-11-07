@@ -1,5 +1,6 @@
 #La classe Pawn represente les personnages controllables par le jouer ou par l'AI
 import pygame
+import time
 from .colors import * 
 class Pawn:
 	def __init__(self, x, y, att, defense):
@@ -11,18 +12,27 @@ class Pawn:
 		self.move_range = 5
 		self.attack_range = 1
 	
-	def move(self, x2, y2):
-		if self.x < x2:
-			self.x += 1
-		elif self.x > x2:
-			self.x -= 1
-		if self.y < y2:
-			self.y += 1
-		elif self.y > y2:
-			self.y -= 1
+	def move(self, x2, y2,screen):
+		while self.x != x2 or self.y != y2:
+			self.remove_pawn(screen, 20, 20)
+			if self.x < x2:
+				self.x += 1
+			elif self.x > x2:
+				self.x -= 1
+			if self.y < y2:
+				self.y += 1
+			elif self.y > y2:
+				self.y -= 1
+			self.draw_pawn(screen, 20, 20)
+			time.sleep(0.5)
+			pygame.display.flip()
+		
 
 	def draw_pawn(self, screen, height, width):	
-		pygame.draw.rect(screen, UNIT, (self.x * height, self.y * width, width, height))
+		self.rect = pygame.draw.rect(screen, UNIT, (self.x * height, self.y * width, width, height))
+	
+	def remove_pawn(self, screen, height, width):	
+		self.rect = pygame.draw.rect(screen, GROUND, (self.x * height, self.y * width, width, height))
 
 	def _get_position(self):
 		return (self.x,self.y)
