@@ -34,9 +34,6 @@ def main():
 	map = Map(CELLWIDTH, CELLHEIGHT)
 
 	cursorMain = Cursor()
-	cursorPlayer = Cursor()
-	cursorCase = Cursor()
-
 
 
 	done = False
@@ -71,18 +68,18 @@ def main():
 					cursorMain.setPosCursor(mpos_x,mpos_y)
 					if cursorMain.isPlayer(tabPawn):
 						print('PLAYER SELECTED')
-						cursorPlayer=cursorMain
-						player=cursorPlayer.pawn
+						#cursorPlayer=cursorMain
+						#player=cursorMain.pawn
 					if cursorMain.isGround(map) and not cursorMain.isPlayer(tabPawn):
-						cursorCase=cursorMain
-						if player!=None:
-							while player.x != cursorCase.col or player.y != cursorCase.row:
-								player.move(cursorCase.col,cursorCase.row)
+						cursorMain=cursorMain
+						if cursorMain.pawn!=None:
+							while cursorMain.pawn.x != cursorMain.col or cursorMain.pawn.y != cursorMain.row:
+								cursorMain.pawn.move(cursorMain.col,cursorMain.row)
 								map.draw_grid(screen)
-								player.draw_pawn(screen, 20, 20)
+								cursorMain.pawn.draw_pawn(screen, 20, 20)
 								time.sleep(0.5)
 								pygame.display.flip()
-							player=None
+							cursorMain.pawn=None
 							
 							#cursor1.displayCursorPos()
 					print('')
