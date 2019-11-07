@@ -35,10 +35,14 @@ def main():
 	map = Map(CELLWIDTH, CELLHEIGHT)
 
 	cursorMain = Cursor()
+<<<<<<< HEAD
 	cursorPlayer = Cursor()
 	cursorCase = Cursor()
 
 	
+=======
+
+>>>>>>> 7b63467b0f1fd17ec8284071ecc9503940b710f0
 
 	done = False
 	#Boucle principale de jeu
@@ -73,13 +77,27 @@ def main():
 					cursorMain.setPosCursor(mpos_x,mpos_y)
 					if cursorMain.isPlayer(tabPawn):
 						print('PLAYER SELECTED')
-						cursorPlayer=cursorMain
-						player=cursorPlayer.pawn
+						#cursorPlayer=cursorMain
+						#player=cursorMain.pawn
 					if cursorMain.isGround(map) and not cursorMain.isPlayer(tabPawn):
+<<<<<<< HEAD
 						cursorCase=cursorMain
 						if player!=None:
 							player.move(cursorCase.col,cursorCase.row,screen)
 							player=None
+=======
+						cursorMain=cursorMain
+						if cursorMain.pawn!=None:
+							while cursorMain.pawn.x != cursorMain.col or cursorMain.pawn.y != cursorMain.row:
+								cursorMain.pawn.move(cursorMain.col,cursorMain.row)
+								map.draw_grid(screen)
+								cursorMain.pawn.draw_pawn(screen, 20, 20)
+								time.sleep(0.5)
+								pygame.display.flip()
+							cursorMain.pawn=None
+							
+							#cursor1.displayCursorPos()
+>>>>>>> 7b63467b0f1fd17ec8284071ecc9503940b710f0
 					print('')
 
 
