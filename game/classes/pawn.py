@@ -37,7 +37,7 @@ class Pawn:
 				print("Vous êtes pas doués")
 
 	#Cette méthode permet de faire la différence entre l'attaque de l'attaquant et la défense de celui qui est attaqué,
-	# elle permet de traité le cas ou défense>attaque qui renverra au lieu d'un nb négatif (rajoutant des pv)
+	# elle permet de traité le cas ou défense>attaque qui renverra 0 au lieu d'un nb négatif (rajoutant des pv)
 	def _difference_attaque(self, attaque, defense):
 		diff=(attaque-defense)
 		print("Difference",diff)
