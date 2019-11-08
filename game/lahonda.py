@@ -26,29 +26,35 @@ def main():
 
 	clock = pygame.time.Clock()
 	pawn1 = Pawn(18,10,10,1)
+	pawn2 = Pawn(10,5,10,1)
 
-	tabPawn = [pawn1]
+	tabPawn = [pawn1,pawn2]
 
 	player=None
 
 	map = Map(CELLWIDTH, CELLHEIGHT)
 
 	cursorMain = Cursor()
+<<<<<<< HEAD
 	cursorPlayer = Cursor()
 	cursorCase = Cursor()
 
+	
+=======
 
+>>>>>>> 7b63467b0f1fd17ec8284071ecc9503940b710f0
 
 	done = False
 	#Boucle principale de jeu
 	while not done:
-
+		screen.fill(BLACK)
 		map.draw_grid(screen)
 		
 		#Ceci permet de limiter le FPS dans jeu
 		clock.tick(FPS)
 		map.draw_grid(screen)
-		pawn1.draw_pawn(screen, 20, 20)
+		for i in tabPawn:
+			i.draw_pawn(screen, 20, 20)
 		
 
 		#Gestion des evenements
@@ -71,20 +77,27 @@ def main():
 					cursorMain.setPosCursor(mpos_x,mpos_y)
 					if cursorMain.isPlayer(tabPawn):
 						print('PLAYER SELECTED')
-						cursorPlayer=cursorMain
-						player=cursorPlayer.pawn
+						#cursorPlayer=cursorMain
+						#player=cursorMain.pawn
 					if cursorMain.isGround(map) and not cursorMain.isPlayer(tabPawn):
+<<<<<<< HEAD
 						cursorCase=cursorMain
 						if player!=None:
-							while player.x != cursorCase.col or player.y != cursorCase.row:
-								player.move(cursorCase.col,cursorCase.row)
+							player.move(cursorCase.col,cursorCase.row,screen)
+							player=None
+=======
+						cursorMain=cursorMain
+						if cursorMain.pawn!=None:
+							while cursorMain.pawn.x != cursorMain.col or cursorMain.pawn.y != cursorMain.row:
+								cursorMain.pawn.move(cursorMain.col,cursorMain.row)
 								map.draw_grid(screen)
-								player.draw_pawn(screen, 20, 20)
+								cursorMain.pawn.draw_pawn(screen, 20, 20)
 								time.sleep(0.5)
 								pygame.display.flip()
-							player=None
+							cursorMain.pawn=None
 							
 							#cursor1.displayCursorPos()
+>>>>>>> 7b63467b0f1fd17ec8284071ecc9503940b710f0
 					print('')
 
 
