@@ -26,29 +26,32 @@ def main():
 	screen = pygame.display.set_mode((HEIGHT, WIDTH))
 
 	clock = pygame.time.Clock()
-	pawn1 = Pawn(18,10,10,1,UNIT)
-	pawn2 = Pawn(10,5,10,1,UNIT)
-	pawn3 = Pawn(10,7,10,1,ENEMY)
 
-	tabPawn = [pawn1,pawn2,pawn3]
+	pawn1 = Pawn(18,18,10,1,UNIT)
+	pawn2 = Pawn(18,16,10,1,UNIT)
+	pawn3 = Pawn(16,18,10,1,UNIT)
+		
 
-	map = Map(CELLWIDTH, CELLHEIGHT)
+	enemy1 = Pawn(5,1,10,1,ENEMY)
+	enemy2 = Pawn(5,3,10,1,ENEMY)
+	enemy3 = Pawn(7,1,10,1,ENEMY)
+
+	tabPawn = [pawn1,pawn2,pawn3, enemy1, enemy2, enemy3]
+
+	la_mapa = Map(CELLWIDTH, CELLHEIGHT)
 
 	cursorMain = Cursor()
 	
-	map.add_pawn(pawn1)
-	map.add_pawn(pawn2)
-	map.add_pawn(pawn3)
-
 	done = False
 	#Boucle principale de jeu
 	while not done:
 		screen.fill(BLACK)
-		map.draw_grid(screen)
-
-		map.add_pawn(pawn1)
-		map.add_pawn(pawn2)
-		map.add_pawn(pawn3)
+		
+		for i in tabPawn:
+			la_mapa.add_pawn(i)
+		
+		la_mapa.draw_grid(screen)
+		
 		#Ceci permet de limiter le FPS dans jeu
 		clock.tick(FPS)
 
@@ -66,20 +69,23 @@ def main():
 					mpos_x, mpos_y = event.pos
 					cursorMain.setPosCursor(mpos_x,mpos_y)
 
-					if(isinstance(map.grid[cursorMain.col][cursorMain.row], Pawn)):			
-						print('PLAYER SELECTED')
-						cursorMain.pawn = map.grid[cursorMain.col][cursorMain.row]
+					if(isinstance(la_mapa.grid[cursorMain.col][cursorMain.row], Pawn)):
+						if(la_mapa.grid[cursorMain.col][cursorMain.row].team == UNIT):
+							print('PLAYER SELECTED')
+							cursorMain.pawn = la_mapa.grid[cursorMain.col][cursorMain.row]
+						if(la_mapa.grid[cursorMain.col][cursorMain.row].team == ENEMY):
+							print("ENEMY SELECTED")
+							cursorMain.enemy = la_mapa.grid[cursorMain.col][cursorMain.row]
+							cursorMain.pawn.attack(cursorMain.enemy)
 							
-					if(isinstance(map.grid[cursorMain.col][cursorMain.row], Ground)):
+					if(isinstance(la_mapa.grid[cursorMain.col][cursorMain.row], Ground)):
 						if cursorMain.pawn!=None:
-							map.grid[cursorMain.pawn.x][cursorMain.pawn.y] = map.g
+							print("Je suis la")
+							
+							la_mapa.grid[cursorMain.pawn.x][cursorMain.pawn.y] = la_mapa.g
+							
 							cursorMain.pawn.move(cursorMain.col, cursorMain.row, screen)
 
-					cursorMain.displayCursorPos()
-					
-							
-					
-						
 
 
 					
