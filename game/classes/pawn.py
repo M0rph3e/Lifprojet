@@ -1,7 +1,7 @@
 #La classe Pawn represente les personnages controllables par le jouer ou par l'AI
 import pygame
 import time
-from .colors import * 
+from .colors import *
 class Pawn:
 	def __init__(self, x, y, att, defense, team):
 		self.x = x
@@ -14,6 +14,7 @@ class Pawn:
 		self.team = team
 	
 	def move(self, x2, y2,screen):
+		
 		while self.x != x2 or self.y != y2:
 			self.remove_pawn(screen, 20, 20)
 			if self.x < x2:

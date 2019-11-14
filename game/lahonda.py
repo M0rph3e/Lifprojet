@@ -2,7 +2,8 @@
 from classes.map import Map
 from classes.pawn import Pawn
 from classes.cursor import Cursor
-from classes.colors import * 
+from classes.colors import *
+from classes.ground import Ground  
 
 import pygame
 import time
@@ -29,30 +30,27 @@ def main():
 	pawn2 = Pawn(10,5,10,1,UNIT)
 	pawn3 = Pawn(10,7,10,1,ENEMY)
 
-
 	tabPawn = [pawn1,pawn2,pawn3]
-
-	player=None
 
 	map = Map(CELLWIDTH, CELLHEIGHT)
 
 	cursorMain = Cursor()
-	cursorCase = Cursor()
-
 	
+	map.add_pawn(pawn1)
+	map.add_pawn(pawn2)
+	map.add_pawn(pawn3)
 
 	done = False
 	#Boucle principale de jeu
 	while not done:
 		screen.fill(BLACK)
 		map.draw_grid(screen)
-		
+
+		map.add_pawn(pawn1)
+		map.add_pawn(pawn2)
+		map.add_pawn(pawn3)
 		#Ceci permet de limiter le FPS dans jeu
 		clock.tick(FPS)
-		map.draw_grid(screen)
-		for i in tabPawn:
-			i.draw_pawn(screen, 20, 20)
-		
 
 		#Gestion des evenements
 		for event in pygame.event.get():
@@ -63,38 +61,26 @@ def main():
 					if event.key == pygame.K_ESCAPE:
 						done = True
 
-				if (event.type == pygame.KEYDOWN):
-					if event.key == pygame.K_f:
-						pawn1.move(pawn1.x-1,pawn1.y)
-
-
 				if (event.type == pygame.MOUSEBUTTONDOWN):
 					# get the position of the mouse
 					mpos_x, mpos_y = event.pos
+					
 					cursorMain.setPosCursor(mpos_x,mpos_y)
-					if cursorMain.isPlayer(tabPawn):
+
+					if(isinstance(map.grid[cursorMain.col][cursorMain.row], Pawn)):			
 						print('PLAYER SELECTED')
-						#cursorPlayer=cursorMain
-						
-					if cursorMain.isGround(map) and not cursorMain.isPlayer(tabPawn):
-						cursorCase=cursorMain
+						cursorMain.pawn = map.grid[cursorMain.col][cursorMain.row]
+							
+					if(isinstance(map.grid[cursorMain.col][cursorMain.row], Ground)):
 						if cursorMain.pawn!=None:
-							cursorMain.pawn.move(cursorCase.col,cursorCase.row,screen)
-							cursorMain.pawn=None
-						
-						if cursorMain.enemy!=None:
-							cursorMain.enemy.move(cursorCase.col,cursorCase.row,screen)
-							cursorMain.enemy=None
-					
-					if not cursorMain.isGround(map) and cursorMain.isPlayer(tabPawn):
-						cursorCase=cursorMain
-						if cursorMain.pawn!=None and cursorMain.enemy!=None:
 							print("Je suis la")
-							cursorMain.pawn.attack(cursorMain.enemy)
-							cursorMain.pawn=None
-							cursorMain.enemy=None
+							
+							map.grid[cursorMain.pawn.x][cursorMain.pawn.y] = map.g
+							
+							cursorMain.pawn.move(cursorMain.col, cursorMain.row, screen)
+							
 					
-					print('')
+						
 
 
 					

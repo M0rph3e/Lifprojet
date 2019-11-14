@@ -2,7 +2,6 @@
 import pygame
 from .pawn import Pawn
 from .map import Map
-from .colors import * 
 
 CELLWIDTH = 20
 CELLHEIGHT = 20
@@ -28,26 +27,29 @@ class Cursor:
             except IndexError:
                 pass
     
-    def isPlayer(self, tabPlayer):
+    def isPlayer(self, player):
+        
+        if player.x == self.col and player.y == self.row:
+            print('# Player #')
+            return True
+        else:
+            print('# No Player #')
+            return False
+
+    def isPlayer_a_attaquer (self, tabPlayer):
         for player in tabPlayer:
             if player.x == self.col and player.y == self.row:
-                if(player.team == UNIT):
-                    self.pawn = player
-                    print('# Player #')
-                if(player.team == ENEMY):
-                    self.enemy = player
-                    print('# Player #')    
+                self.enemy = player
+                print('# Player #')
                 return True
             else:
                 print('# No Player #')
-        if self.pawn == None:
-            self.pawn = None
         if self.enemy == None:
-            self.enemy == None
-
-        return False
-
+            self.enemy = False
+            return False
+    
     def isGround(self, map):
+        
         if map.grid[self.col][self.row].get_traversable():
             self.wall=False
             print("|| Ground ||")
