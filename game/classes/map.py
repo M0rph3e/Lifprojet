@@ -41,6 +41,8 @@ class Map:
 					self.w.draw(screen,row,column,self.height,self.width)
 				if self.grid[column][row] == self.g:
 					self.g.draw(screen,row,column,self.height,self.width)
+				if isinstance(self.grid[column][row], Pawn):
+					self.grid[column][row].draw_pawn(screen, self.height, self.width)
 					
 	def add_pawn(self, pawn):
 		self.grid[pawn.x][pawn.y] = pawn
