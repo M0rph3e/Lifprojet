@@ -55,7 +55,7 @@ class Pawn:
 					del self
 					print("Vous êtes pas doués")
 		else:
-			print("Bah y'a rien a attaquer pelo")
+			print("Il est loin pour attaquer, pelo")
 
 	def get_adjacent(self,pion): #verifie qu'un pion est adjacent à un autre
 		diff_x = abs(self.x - pion.x)

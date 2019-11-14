@@ -32,23 +32,23 @@ def main():
 
 	tabPawn = [pawn1,pawn2,pawn3]
 
-	map = Map(CELLWIDTH, CELLHEIGHT)
+	la_mapa = Map(CELLWIDTH, CELLHEIGHT)
 
 	cursorMain = Cursor()
 	
-	map.add_pawn(pawn1)
-	map.add_pawn(pawn2)
-	map.add_pawn(pawn3)
+	la_mapa.add_pawn(pawn1)
+	la_mapa.add_pawn(pawn2)
+	la_mapa.add_pawn(pawn3)
 
 	done = False
 	#Boucle principale de jeu
 	while not done:
 		screen.fill(BLACK)
-		map.draw_grid(screen)
+		la_mapa.draw_grid(screen)
 
-		map.add_pawn(pawn1)
-		map.add_pawn(pawn2)
-		map.add_pawn(pawn3)
+		la_mapa.add_pawn(pawn1)
+		la_mapa.add_pawn(pawn2)
+		la_mapa.add_pawn(pawn3)
 		#Ceci permet de limiter le FPS dans jeu
 		clock.tick(FPS)
 
@@ -67,18 +67,24 @@ def main():
 					
 					cursorMain.setPosCursor(mpos_x,mpos_y)
 
-					if(isinstance(map.grid[cursorMain.col][cursorMain.row], Pawn)):			
-						print('PLAYER SELECTED')
-						cursorMain.pawn = map.grid[cursorMain.col][cursorMain.row]
+					if(isinstance(la_mapa.grid[cursorMain.col][cursorMain.row], Pawn)):
+						if(la_mapa.grid[cursorMain.col][cursorMain.row].team == UNIT):
+							print('PLAYER SELECTED')
+							cursorMain.pawn = la_mapa.grid[cursorMain.col][cursorMain.row]
+						if(la_mapa.grid[cursorMain.col][cursorMain.row].team == ENEMY):
+							print("ENEMY SELECTED")
+							cursorMain.enemy = la_mapa.grid[cursorMain.col][cursorMain.row]
+							cursorMain.pawn.attack(cursorMain.enemy, la_mapa)
 							
-					if(isinstance(map.grid[cursorMain.col][cursorMain.row], Ground)):
+					if(isinstance(la_mapa.grid[cursorMain.col][cursorMain.row], Ground)):
 						if cursorMain.pawn!=None:
 							print("Je suis la")
 							
-							map.grid[cursorMain.pawn.x][cursorMain.pawn.y] = map.g
+							la_mapa.grid[cursorMain.pawn.x][cursorMain.pawn.y] = la_mapa.g
 							
 							cursorMain.pawn.move(cursorMain.col, cursorMain.row, screen)
-							
+
+						
 					
 						
 
