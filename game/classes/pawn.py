@@ -2,6 +2,9 @@
 import pygame
 import time
 from .colors import *
+
+DISTANCE_DEPL_MAX=7
+
 class Pawn:
 	def __init__(self, x, y, att, defense, team):
 		self.x = x
@@ -14,29 +17,31 @@ class Pawn:
 		self.team = team
 	
 	def move(self, x2, y2,screen):
-		
-		while self.x != x2 or self.y != y2:
-			self.remove_pawn(screen, 20, 20)
-			if self.x < x2:
-				self.x += 1
-			elif self.x > x2:
-				self.x -= 1
-			if self.y < y2:
-				self.y += 1
-			elif self.y > y2:
-				self.y -= 1
-			self.draw_pawn(screen, 20, 20)
-			time.sleep(0.5)
-			pygame.display.flip()
+		if self.get_distance(x2,y2) <= DISTANCE_DEPL_MAX:
+			while self.x != x2 or self.y != y2:
+				self.remove_pawn(screen, 20, 20)
+				if self.x < x2:
+					self.x += 1
+				elif self.x > x2:
+					self.x -= 1
+				if self.y < y2:
+					self.y += 1
+				elif self.y > y2:
+					self.y -= 1
+				self.draw_pawn(screen, 20, 20)
+				time.sleep(0.5)
+				pygame.display.flip()
+		else:
+			print ('Vous ne pouvez pas aller ici')
 		
 
 	def draw_pawn(self, screen, height, width):	
 		self.rect = pygame.draw.rect(screen, self.team, (self.x * height, self.y * width, width, height))
 	
 	def remove_pawn(self, screen, height, width):	
-		self.rect = pygame.draw.rect(screen, GROUND, (self.x * height, self.y * width, width, height))
+		pygame.draw.rect(screen, GROUND, (self.x * height, self.y * width, width, height),-1)
 
-	def _get_position(self):
+	def get_position(self):
 		return (self.x,self.y)
 
 	def attack(self, pion):
@@ -65,6 +70,10 @@ class Pawn:
 		else:
 			return False
 
+	def get_distance(self,x2,y2): #verifie qu'un pion est adjacent à un autre
+		diff_x = abs(self.x - x2)
+		diff_y = abs(self.y - y2)
+		return diff_x + diff_y
 		
 
 	#Cette méthode permet de faire la différence entre l'attaque de l'attaquant et la défense de celui qui est attaqué,

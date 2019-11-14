@@ -64,7 +64,6 @@ def main():
 				if (event.type == pygame.MOUSEBUTTONDOWN):
 					# get the position of the mouse
 					mpos_x, mpos_y = event.pos
-					
 					cursorMain.setPosCursor(mpos_x,mpos_y)
 
 					if(isinstance(map.grid[cursorMain.col][cursorMain.row], Pawn)):			
@@ -73,11 +72,11 @@ def main():
 							
 					if(isinstance(map.grid[cursorMain.col][cursorMain.row], Ground)):
 						if cursorMain.pawn!=None:
-							print("Je suis la")
-							
 							map.grid[cursorMain.pawn.x][cursorMain.pawn.y] = map.g
-							
 							cursorMain.pawn.move(cursorMain.col, cursorMain.row, screen)
+
+					cursorMain.displayCursorPos()
+					
 							
 					
 						

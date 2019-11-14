@@ -7,7 +7,7 @@ class Ground:
        pass
 
     def draw(self,screen,x,y,height,width):
-        pygame.draw.rect(screen, GROUND, (y * width, x * height, width, height))  
+        pygame.draw.rect(screen, GROUND, (y * width, x * height, width, height),1)  
 
 
     def get_traversable(self):

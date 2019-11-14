@@ -13,7 +13,7 @@ class Cursor:
         self.row = None
         self.pawn = None
         self.enemy = None
-        self.wall = None
+        #self.wall = None
 
     def setPosCursor(self, mouseX, mouseY):
         colTest = mouseX // (CELLWIDTH) # which cell is the mouse clicking
@@ -26,7 +26,7 @@ class Cursor:
                 
             except IndexError:
                 pass
-    
+    '''
     def isPlayer(self, player):
         
         if player.x == self.col and player.y == self.row:
@@ -58,10 +58,12 @@ class Cursor:
             self.wall=True
             print('|| Wall ||') 
             return False
+    '''
 
     def displayCursorPos(self):
         print('ROW : ', self.row)
         print('COL : ', self.col)
+        print('')
 
     
 
