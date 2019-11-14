@@ -1,5 +1,7 @@
 from pygame import Color
 
+TRANSPARENT = (0,0,0,255)
+
 BLACK  = Color(0, 0, 0)
 WHITE  = Color(255, 255, 255)
 GREEN  = Color(0, 255, 0)

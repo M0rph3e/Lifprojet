@@ -2,6 +2,7 @@
 import pygame
 from .pawn import Pawn
 from .map import Map
+from .colors import * 
 
 CELLWIDTH = 20
 CELLHEIGHT = 20
@@ -12,6 +13,7 @@ class Cursor:
         self.col = None
         self.row = None
         self.pawn = None
+        self.enemy = None
         self.wall = None
 
     def setPosCursor(self, mouseX, mouseY):
@@ -29,14 +31,21 @@ class Cursor:
     def isPlayer(self, tabPlayer):
         for player in tabPlayer:
             if player.x == self.col and player.y == self.row:
-                self.pawn = player
-                print('# Player #')
+                if(player.team == UNIT):
+                    self.pawn = player
+                    print('# Player #')
+                if(player.team == ENEMY):
+                    self.enemy = player
+                    print('# Player #')    
                 return True
             else:
                 print('# No Player #')
         if self.pawn == None:
-            self.pawn = False
-            return False
+            self.pawn = None
+        if self.enemy == None:
+            self.enemy == None
+
+        return False
 
     def isGround(self, map):
         if map.grid[self.col][self.row].get_traversable():
