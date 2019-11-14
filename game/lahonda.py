@@ -25,17 +25,18 @@ def main():
 	screen = pygame.display.set_mode((HEIGHT, WIDTH))
 
 	clock = pygame.time.Clock()
-	pawn1 = Pawn(18,10,10,1)
-	pawn2 = Pawn(10,5,10,1)
+	pawn1 = Pawn(18,10,10,1,UNIT)
+	pawn2 = Pawn(10,5,10,1,UNIT)
+	pawn3 = Pawn(10,7,10,1,ENEMY)
 
-	tabPawn = [pawn1,pawn2]
+
+	tabPawn = [pawn1,pawn2,pawn3]
 
 	player=None
 
 	map = Map(CELLWIDTH, CELLHEIGHT)
 
 	cursorMain = Cursor()
-	cursorPlayer = Cursor()
 	cursorCase = Cursor()
 
 	
@@ -73,12 +74,26 @@ def main():
 					cursorMain.setPosCursor(mpos_x,mpos_y)
 					if cursorMain.isPlayer(tabPawn):
 						print('PLAYER SELECTED')
-						player=cursorMain.pawn
+						#cursorPlayer=cursorMain
+						
 					if cursorMain.isGround(map) and not cursorMain.isPlayer(tabPawn):
 						cursorCase=cursorMain
-						if player!=None:
-							player.move(cursorCase.col,cursorCase.row,screen)
-							player=None
+						if cursorMain.pawn!=None:
+							cursorMain.pawn.move(cursorCase.col,cursorCase.row,screen)
+							cursorMain.pawn=None
+						
+						if cursorMain.enemy!=None:
+							cursorMain.enemy.move(cursorCase.col,cursorCase.row,screen)
+							cursorMain.enemy=None
+					
+					if not cursorMain.isGround(map) and cursorMain.isPlayer(tabPawn):
+						cursorCase=cursorMain
+						if cursorMain.pawn!=None and cursorMain.enemy!=None:
+							print("Je suis la")
+							cursorMain.pawn.attack(cursorMain.enemy)
+							cursorMain.pawn=None
+							cursorMain.enemy=None
+					
 					print('')
 
 
