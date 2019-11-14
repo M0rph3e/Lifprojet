@@ -26,29 +26,32 @@ def main():
 	screen = pygame.display.set_mode((HEIGHT, WIDTH))
 
 	clock = pygame.time.Clock()
-	pawn1 = Pawn(18,10,10,1,UNIT)
-	pawn2 = Pawn(10,5,10,1,UNIT)
-	pawn3 = Pawn(10,7,10,1,ENEMY)
 
-	tabPawn = [pawn1,pawn2,pawn3]
+	pawn1 = Pawn(18,18,10,1,UNIT)
+	pawn2 = Pawn(18,16,10,1,UNIT)
+	pawn3 = Pawn(16,18,10,1,UNIT)
+		
+
+	enemy1 = Pawn(5,1,10,1,ENEMY)
+	enemy2 = Pawn(5,3,10,1,ENEMY)
+	enemy3 = Pawn(7,1,10,1,ENEMY)
+
+	tabPawn = [pawn1,pawn2,pawn3, enemy1, enemy2, enemy3]
 
 	la_mapa = Map(CELLWIDTH, CELLHEIGHT)
 
 	cursorMain = Cursor()
 	
-	la_mapa.add_pawn(pawn1)
-	la_mapa.add_pawn(pawn2)
-	la_mapa.add_pawn(pawn3)
-
 	done = False
 	#Boucle principale de jeu
 	while not done:
 		screen.fill(BLACK)
+		
+		for i in tabPawn:
+			la_mapa.add_pawn(i)
+		
 		la_mapa.draw_grid(screen)
-
-		la_mapa.add_pawn(pawn1)
-		la_mapa.add_pawn(pawn2)
-		la_mapa.add_pawn(pawn3)
+		
 		#Ceci permet de limiter le FPS dans jeu
 		clock.tick(FPS)
 
@@ -74,7 +77,7 @@ def main():
 						if(la_mapa.grid[cursorMain.col][cursorMain.row].team == ENEMY):
 							print("ENEMY SELECTED")
 							cursorMain.enemy = la_mapa.grid[cursorMain.col][cursorMain.row]
-							cursorMain.pawn.attack(cursorMain.enemy, la_mapa)
+							cursorMain.pawn.attack(cursorMain.enemy)
 							
 					if(isinstance(la_mapa.grid[cursorMain.col][cursorMain.row], Ground)):
 						if cursorMain.pawn!=None:
