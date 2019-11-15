@@ -36,64 +36,115 @@ def main():
 	enemy2 = Pawn(5,3,10,1,ENEMY)
 	enemy3 = Pawn(7,1,10,1,ENEMY)
 
-	tabPawn = [pawn1,pawn2,pawn3, enemy1, enemy2, enemy3]
+	tabPawn = [pawn1,pawn2,pawn3]
+	tabEnemy = [enemy1, enemy2, enemy3]
 
 	la_mapa = Map(CELLWIDTH, CELLHEIGHT)
 
 	cursorMain = Cursor()
 	
 	done = False
+
+	tour = 1
 	#Boucle principale de jeu
-	while not done:
-		screen.fill(BLACK)
-		
-		for i in tabPawn:
-			la_mapa.add_pawn(i)
-		
-		la_mapa.draw_grid(screen)
+	while tabPawn!=False and tabEnemy!=False:
 		
 		#Ceci permet de limiter le FPS dans jeu
 		clock.tick(FPS)
 
-		#Gestion des evenements
-		for event in pygame.event.get():
-				if (event.type == pygame.QUIT):
-						done = True
+		###### TOUR JOUEUR ######
+		if tour == 1:
+			print('Au tour du Joueur')
 
-				if (event.type == pygame.KEYDOWN):
-					if event.key == pygame.K_ESCAPE:
-						done = True
+			for i in tabPawn:
+				i.canMove=50
+				i.canAttack=True
 
-				if (event.type == pygame.MOUSEBUTTONDOWN):
-					# get the position of the mouse
-					mpos_x, mpos_y = event.pos
-					cursorMain.setPosCursor(mpos_x,mpos_y)
-					if(isinstance(la_mapa.grid[cursorMain.col][cursorMain.row], Pawn)):
-						if(la_mapa.grid[cursorMain.col][cursorMain.row].team == UNIT):
-							print('PLAYER SELECTED')
-							cursorMain.pawn = la_mapa.grid[cursorMain.col][cursorMain.row]
-							#for i in range (cursorMain.col-7,cursorMain.col+7):
-							#	for j in range (cursorMain.row-7,cursorMain.row+7):
-							#		diff_x = abs(cursorMain.col - i)
-							#		diff_y = abs(cursorMain.row - j)
-							#		if diff_x + diff_y <=5:
-							#			pygame.draw.rect(screen, RED, (i * la_mapa.width, j * la_mapa.height, la_mapa.width, la_mapa.height)) 								
+			while tour == 1:
+				screen.fill(BLACK)
+		
+				for i in tabPawn:
+					la_mapa.add_pawn(i)
+		
+				for i in tabEnemy:
+					la_mapa.add_pawn(i)
 
-						if(la_mapa.grid[cursorMain.col][cursorMain.row].team == ENEMY):
-							print("ENEMY SELECTED")
-							cursorMain.enemy = la_mapa.grid[cursorMain.col][cursorMain.row]
-							cursorMain.pawn.attack(cursorMain.enemy)
-							
-					if(isinstance(la_mapa.grid[cursorMain.col][cursorMain.row], Ground)):
-						if cursorMain.pawn!=None:
-							la_mapa.grid[cursorMain.pawn.x][cursorMain.pawn.y] = la_mapa.g
-							cursorMain.pawn.move(cursorMain.col, cursorMain.row, screen)
-					cursorMain.displayCursorPos()
+				la_mapa.draw_grid(screen)
 
-					
+				#Gestion des evenements
+				for event in pygame.event.get():
+						if (event.type == pygame.QUIT):
+								done = True
 
-		pygame.display.flip()
-	
+						if (event.type == pygame.KEYDOWN):
+							if event.key == pygame.K_ESCAPE:
+								done = True
+							if event.key == pygame.K_p:
+								tour = 2
+
+						if (event.type == pygame.MOUSEBUTTONDOWN):
+							# get the position of the mouse
+							mpos_x, mpos_y = event.pos
+							cursorMain.setPosCursor(mpos_x,mpos_y)
+							if(isinstance(la_mapa.grid[cursorMain.col][cursorMain.row], Pawn)):
+								if(la_mapa.grid[cursorMain.col][cursorMain.row].team == UNIT):
+									print('PLAYER SELECTED')
+									cursorMain.pawn = la_mapa.grid[cursorMain.col][cursorMain.row]
+									#for i in range (cursorMain.col-7,cursorMain.col+7):
+									#	for j in range (cursorMain.row-7,cursorMain.row+7):
+									#		diff_x = abs(cursorMain.col - i)
+									#		diff_y = abs(cursorMain.row - j)
+									#		if diff_x + diff_y <=5:
+									#			pygame.draw.rect(screen, RED, (i * la_mapa.width, j * la_mapa.height, la_mapa.width, la_mapa.height)) 								
+
+								if(la_mapa.grid[cursorMain.col][cursorMain.row].team == ENEMY):
+									print("ENEMY SELECTED")
+									cursorMain.enemy = la_mapa.grid[cursorMain.col][cursorMain.row]
+									cursorMain.pawn.attack(cursorMain.enemy, la_mapa)
+									
+							if(isinstance(la_mapa.grid[cursorMain.col][cursorMain.row], Ground)):
+								if cursorMain.pawn!=None:
+									la_mapa.grid[cursorMain.pawn.x][cursorMain.pawn.y] = la_mapa.g
+									cursorMain.pawn.move(cursorMain.col, cursorMain.row, screen)
+							cursorMain.displayCursorPos()
+
+				if all(pawn.canMove == 0 for pawn in tabPawn) and all(pawn.canAttack == False for pawn in tabPawn):
+					tour=2
+					print('fin du tour')
+		
+				pygame.display.flip()
+		
+
+		###### TOUR IA ######
+		if tour == 2:
+			print("Au tour de l'IA")
+			for i in tabEnemy:
+				i.canMove=True
+				i.canAttack=True
+
+			while tour == 2:
+				screen.fill(BLACK)
+		
+				for i in tabPawn:
+					la_mapa.add_pawn(i)
+		
+				for i in tabEnemy:
+					la_mapa.add_pawn(i)
+
+				la_mapa.draw_grid(screen)
+
+				for event in pygame.event.get():
+
+						if (event.type == pygame.KEYDOWN):
+							if event.key == pygame.K_p:
+								tour = 1
+				###### DEPLACEMENT ET ATTAQUE IA ######
+
+				if all(enemy.canMove == False for enemy in tabEnemy):
+					tour=1
+
+	print('FIN DE LA PARTIE')				
+
 	pygame.quit()
 
 #Lancement du main

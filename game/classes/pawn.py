@@ -3,7 +3,7 @@ import pygame
 import time
 from .colors import *
 
-DISTANCE_DEPL_MAX=7
+DISTANCE_DEPL_MAX=50
 
 class Pawn:
 	def __init__(self, x, y, att, defense, team):
@@ -12,22 +12,27 @@ class Pawn:
 		self.defense=defense
 		self.att=att
 		self.hp = 20 #j'ai changé
-		self.move_range = 5
 		self.attack_range = 1
 		self.team = team
-	
+		self.canMove = DISTANCE_DEPL_MAX
+		self.canAttack = None
+
 	def move(self, x2, y2,screen):
-		if self.get_distance(x2,y2) <= DISTANCE_DEPL_MAX:
+		if self.get_distance(x2,y2) <= self.canMove:
 			while self.x != x2 or self.y != y2:
 				self.remove_pawn(screen, 20, 20)
 				if self.x < x2:
 					self.x += 1
+					self.canMove -= 1
 				elif self.x > x2:
 					self.x -= 1
+					self.canMove -= 1
 				if self.y < y2:
 					self.y += 1
+					self.canMove -= 1
 				elif self.y > y2:
 					self.y -= 1
+					self.canMove -= 1
 				self.draw_pawn(screen, 20, 20)
 				time.sleep(0.5)
 				pygame.display.flip()
@@ -45,21 +50,22 @@ class Pawn:
 	def get_position(self):
 		return (self.x,self.y)
 
-	def attack(self, pion):
+	def attack(self, pion, map):
 		if(self.get_adjacent(pion) and (self.team != pion.team)):	
 			print("Oponent HP", pion.hp)
 			pion.hp -= self._difference_attaque(self.att,pion.defense)
 			print("After attack", pion.hp)
 			if pion.hp<=0:
-				del pion
+				map.grid[pion.x][pion.y]=map.g
 				print("Il est mort")
 			else:
 				print("Current HP", self.hp)
 				self.hp -= self._difference_attaque(pion.att,self.defense)
 				print("After attack", self.hp)
 				if self.hp <= 0:
-					del self
+					map.grid[self.x][self.y]=map.g
 					print("Vous êtes pas doués")
+			self.canAttack=False
 		else:
 			print("Il est loin pour attaquer, pelo")
 
