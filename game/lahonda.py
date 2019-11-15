@@ -100,12 +100,12 @@ def main():
 								if(la_mapa.grid[cursorMain.col][cursorMain.row].team == ENEMY):
 									print("ENEMY SELECTED")
 									cursorMain.enemy = la_mapa.grid[cursorMain.col][cursorMain.row]
-									cursorMain.pawn.attack(cursorMain.enemy, la_mapa)
+									cursorMain.pawn.attack(cursorMain.enemy)
 									
 							if(isinstance(la_mapa.grid[cursorMain.col][cursorMain.row], Ground)):
 								if cursorMain.pawn!=None:
 									la_mapa.grid[cursorMain.pawn.x][cursorMain.pawn.y] = la_mapa.g
-									cursorMain.pawn.move(cursorMain.col, cursorMain.row, screen)
+									cursorMain.pawn.move(cursorMain.col, cursorMain.row, screen,la_mapa.grid)
 							cursorMain.displayCursorPos()
 
 				if all(pawn.canMove == 0 for pawn in tabPawn) and all(pawn.canAttack == False for pawn in tabPawn):

@@ -47,3 +47,5 @@ class Map:
 	def add_pawn(self, pawn):
 		self.grid[pawn.x][pawn.y] = pawn
 
+	
+	
