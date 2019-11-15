@@ -26,39 +26,7 @@ class Cursor:
                 
             except IndexError:
                 pass
-    '''
-    def isPlayer(self, player):
-        
-        if player.x == self.col and player.y == self.row:
-            print('# Player #')
-            return True
-        else:
-            print('# No Player #')
-            return False
 
-    def isPlayer_a_attaquer (self, tabPlayer):
-        for player in tabPlayer:
-            if player.x == self.col and player.y == self.row:
-                self.enemy = player
-                print('# Player #')
-                return True
-            else:
-                print('# No Player #')
-        if self.enemy == None:
-            self.enemy = False
-            return False
-    
-    def isGround(self, map):
-        
-        if map.grid[self.col][self.row].get_traversable():
-            self.wall=False
-            print("|| Ground ||")
-            return True
-        else:
-            self.wall=True
-            print('|| Wall ||') 
-            return False
-    '''
 
     def displayCursorPos(self):
         print('ROW : ', self.row)

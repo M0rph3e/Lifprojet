@@ -38,8 +38,9 @@ class Pawn:
 	def draw_pawn(self, screen, height, width):	
 		self.rect = pygame.draw.rect(screen, self.team, (self.x * height, self.y * width, width, height))
 	
-	def remove_pawn(self, screen, height, width):	
-		pygame.draw.rect(screen, GROUND, (self.x * height, self.y * width, width, height),-1)
+	def remove_pawn(self, screen, height, width):
+		pygame.draw.rect(screen, BLACK, (self.x * height, self.y * width, width, height))	
+		pygame.draw.rect(screen, GROUND, (self.x * height, self.y * width, width, height),1)
 
 	def get_position(self):
 		return (self.x,self.y)
