@@ -68,17 +68,11 @@ def main():
 					# get the position of the mouse
 					mpos_x, mpos_y = event.pos
 					cursorMain.setPosCursor(mpos_x,mpos_y)
+
 					if(isinstance(la_mapa.grid[cursorMain.col][cursorMain.row], Pawn)):
 						if(la_mapa.grid[cursorMain.col][cursorMain.row].team == UNIT):
 							print('PLAYER SELECTED')
 							cursorMain.pawn = la_mapa.grid[cursorMain.col][cursorMain.row]
-							#for i in range (cursorMain.col-7,cursorMain.col+7):
-							#	for j in range (cursorMain.row-7,cursorMain.row+7):
-							#		diff_x = abs(cursorMain.col - i)
-							#		diff_y = abs(cursorMain.row - j)
-							#		if diff_x + diff_y <=5:
-							#			pygame.draw.rect(screen, RED, (i * la_mapa.width, j * la_mapa.height, la_mapa.width, la_mapa.height)) 								
-
 						if(la_mapa.grid[cursorMain.col][cursorMain.row].team == ENEMY):
 							print("ENEMY SELECTED")
 							cursorMain.enemy = la_mapa.grid[cursorMain.col][cursorMain.row]
@@ -86,9 +80,13 @@ def main():
 							
 					if(isinstance(la_mapa.grid[cursorMain.col][cursorMain.row], Ground)):
 						if cursorMain.pawn!=None:
+							print("Je suis la")
+							
 							la_mapa.grid[cursorMain.pawn.x][cursorMain.pawn.y] = la_mapa.g
-							cursorMain.pawn.move(cursorMain.col, cursorMain.row, screen)
-					cursorMain.displayCursorPos()
+							
+							cursorMain.pawn.move(cursorMain.col, cursorMain.row, screen,la_mapa.grid)
+
+
 
 					
 
