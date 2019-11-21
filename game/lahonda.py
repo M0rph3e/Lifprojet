@@ -27,14 +27,14 @@ def main():
 
 	clock = pygame.time.Clock()
 
-	pawn1 = Pawn(18,18,10,1,UNIT)
-	pawn2 = Pawn(18,16,10,1,UNIT)
-	pawn3 = Pawn(16,18,10,1,UNIT)
+	pawn1 = Pawn(18,18,20,1,UNIT)
+	pawn2 = Pawn(18,16,20,1,UNIT)
+	pawn3 = Pawn(16,18,20,1,UNIT)
 		
 
-	enemy1 = Pawn(5,1,10,1,ENEMY)
-	enemy2 = Pawn(5,3,10,1,ENEMY)
-	enemy3 = Pawn(7,1,10,1,ENEMY)
+	enemy1 = Pawn(5,1,0,0,ENEMY)
+	enemy2 = Pawn(5,3,0,0,ENEMY)
+	enemy3 = Pawn(7,1,0,0,ENEMY)
 
 	tabPawn = [pawn1,pawn2,pawn3]
 	tabEnemy = [enemy1, enemy2, enemy3]
@@ -47,7 +47,7 @@ def main():
 
 	tour = 1
 	#Boucle principale de jeu
-	while tabPawn!=False and tabEnemy!=False:
+	while (tabPawn!=False and tabEnemy!=False):
 		
 		#Ceci permet de limiter le FPS dans jeu
 		clock.tick(FPS)
@@ -57,7 +57,7 @@ def main():
 			print('Au tour du Joueur')
 
 			for i in tabPawn:
-				i.canMove=50
+				i.canMove=7
 				i.canAttack=True
 
 			while tour == 1:
@@ -100,7 +100,7 @@ def main():
 								if(la_mapa.grid[cursorMain.col][cursorMain.row].team == ENEMY):
 									print("ENEMY SELECTED")
 									cursorMain.enemy = la_mapa.grid[cursorMain.col][cursorMain.row]
-									cursorMain.pawn.attack(cursorMain.enemy)
+									cursorMain.pawn.attack(cursorMain.enemy, la_mapa)
 									
 							if(isinstance(la_mapa.grid[cursorMain.col][cursorMain.row], Ground)):
 								if cursorMain.pawn!=None:
@@ -132,6 +132,7 @@ def main():
 					la_mapa.add_pawn(i)
 
 				la_mapa.draw_grid(screen)
+
 
 				for event in pygame.event.get():
 

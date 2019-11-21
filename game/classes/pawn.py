@@ -17,29 +17,42 @@ class Pawn:
         self.move_range = 5
         self.attack_range = 1
         self.team = team
+        self.canMove=DISTANCE_DEPL_MAX
+        self.canAttack=True
     
     def move(self, x2, y2,screen,grid_in):
         path = astar(grid_in,(self.x,self.y),(x2,y2))
         print(path)
-        
+        firstCase = True
         if path != None:
-            for i in path:
-                self.remove_pawn(screen, 20, 20)
-                
-                self.x = i[0]
+            if len(path)-1 <= self.canMove:
+                for i in path:
+                    self.remove_pawn(screen, 20, 20)
+                    
+                    self.x = i[0]
 
-                self.draw_pawn(screen, 20, 20)
-                time.sleep(0.25)
-                pygame.display.flip()  
-                
-                self.remove_pawn(screen, 20, 20)
+                    self.draw_pawn(screen, 20, 20)
+                    time.sleep(0.25)
+                    pygame.display.flip()  
+                    
+                    self.remove_pawn(screen, 20, 20)
 
-                self.y = i[1]
+                    self.y = i[1]
 
 
-                self.draw_pawn(screen, 20, 20)
-                time.sleep(0.25)
-                pygame.display.flip()         
+                    self.draw_pawn(screen, 20, 20)
+
+                    print("i :",i)
+                    if not firstCase:
+                        self.canMove -= 1
+                        print("Case restantes", self.canMove)
+
+                    firstCase=False
+
+                    time.sleep(0.25)
+                    pygame.display.flip()
+            else:
+                print('Vous pouvez vous déplacer de ', self.canMove, ' cases maximum')
 
         else:
             print("Trop loin")
@@ -55,21 +68,22 @@ class Pawn:
     def get_position(self):
         return (self.x,self.y)
 
-    def attack(self, pion):
+    def attack(self, pion, lamap):
         if(self.get_adjacent(pion) and (self.team != pion.team)):	
             print("Oponent HP", pion.hp)
             pion.hp -= self._difference_attaque(self.att,pion.defense)
             print("After attack", pion.hp)
             if pion.hp<=0:
-                del pion
+                lamap.grid[pion.x][pion.y]=lamap.g
                 print("Il est mort")
-            else:
-                print("Current HP", self.hp)
-                self.hp -= self._difference_attaque(pion.att,self.defense)
-                print("After attack", self.hp)
-                if self.hp <= 0:
-                    del self
-                    print("Vous êtes pas doués")
+           # else:
+                #print("Current HP", self.hp)
+                #self.hp -= self._difference_attaque(pion.att,self.defense)
+                #print("After attack", self.hp)
+                #if self.hp <= 0:
+                    #lamap.grid[self.x][self.y]=lamap.g
+                    #print("Vous êtes pas doués")
+            self.canAttack=False
         else:
             print("Il est loin pour attaquer, pelo")
 
@@ -81,7 +95,7 @@ class Pawn:
         else:
             return False
 
-    def get_distance(self,x2,y2): #verifie qu'un pion est adjacent à un autre
+    def get_distance(self,x2,y2): 
         diff_x = abs(self.x - x2)
         diff_y = abs(self.y - y2)
         return diff_x + diff_y
