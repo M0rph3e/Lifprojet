@@ -183,7 +183,7 @@ def astar(maze, start, end):
 
 
             # Make sure walkable terrain
-            if isinstance(maze[node_position[0]][node_position[1]], Wall):
+            if (isinstance(maze[node_position[0]][node_position[1]], Wall) or isinstance(maze[node_position[0]][node_position[1]], Pawn)):
                 continue
             # Create new node
             new_node = Node(current_node, node_position)
