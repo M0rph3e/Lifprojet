@@ -114,11 +114,12 @@ def main():
 
 								if(la_mapa.grid[cursorMain.col][cursorMain.row].team == ENEMY):
 									print("ENEMY SELECTED")
-									for i in tabEnemy:
-										if(la_mapa.grid[cursorMain.col][cursorMain.row] == i):
-											if(cursorMain.pawn.attack(i)):
-												la_mapa.grid[i.x][i.y] = la_mapa.g
-												tabEnemy.remove(i)
+									if cursorMain.pawn!=None:
+										for i in tabEnemy:
+											if(la_mapa.grid[cursorMain.col][cursorMain.row] == i):
+												if(cursorMain.pawn.attack(i)):
+													la_mapa.grid[i.x][i.y] = la_mapa.g
+													tabEnemy.remove(i)
 
 									
 									
