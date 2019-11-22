@@ -1,6 +1,7 @@
 #Le programme principal du jeu
 from classes.map import Map
 from classes.pawn import Pawn
+from classes.pawnai import PawnAI
 from classes.cursor import Cursor
 from classes.colors import *
 from classes.ground import Ground  
@@ -32,9 +33,9 @@ def main():
 	pawn3 = Pawn(16,18,20,1,UNIT)
 		
 
-	enemy1 = Pawn(5,1,0,0,ENEMY)
-	enemy2 = Pawn(5,3,0,0,ENEMY)
-	enemy3 = Pawn(7,1,0,0,ENEMY)
+	enemy1 = PawnAI(5,1,0,0,ENEMY)
+	enemy2 = PawnAI(5,3,0,0,ENEMY)
+	enemy3 = PawnAI(7,1,0,0,ENEMY)
 
 	tabPawn = [pawn1,pawn2,pawn3]
 	tabEnemy = [enemy1, enemy2, enemy3]
@@ -137,6 +138,11 @@ def main():
 					la_mapa.add_pawn(i)
 
 				la_mapa.draw_grid(screen)
+			
+				#permet de faire bouger les pions ennemis 
+				for j in tabEnemy:
+					la_mapa.grid[j.x][j.y] = la_mapa.g
+					j.move(screen, la_mapa.grid)
 
 
 				for event in pygame.event.get():
@@ -146,7 +152,7 @@ def main():
 								tour = 1
 				###### DEPLACEMENT ET ATTAQUE IA ######
 
-				if all(enemy.canMove == False for enemy in tabEnemy):
+				if all(enemy.canMove == 0 for enemy in tabEnemy):
 					tour=1
 
 	print('FIN DE LA PARTIE')				
