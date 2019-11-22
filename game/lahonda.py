@@ -86,6 +86,11 @@ def main():
 							# get the position of the mouse
 							mpos_x, mpos_y = event.pos
 							cursorMain.setPosCursor(mpos_x,mpos_y)
+							if(isinstance(la_mapa.grid[cursorMain.col][cursorMain.row], Ground)):
+								if cursorMain.pawn!=None:
+									la_mapa.grid[cursorMain.pawn.x][cursorMain.pawn.y] = la_mapa.g
+									cursorMain.pawn.move(cursorMain.col, cursorMain.row, screen,la_mapa.grid)
+
 							if(isinstance(la_mapa.grid[cursorMain.col][cursorMain.row], Pawn)):
 								if(la_mapa.grid[cursorMain.col][cursorMain.row].team == UNIT):
 									print('PLAYER SELECTED')
@@ -102,10 +107,6 @@ def main():
 									cursorMain.enemy = la_mapa.grid[cursorMain.col][cursorMain.row]
 									cursorMain.pawn.attack(cursorMain.enemy, la_mapa)
 									
-							if(isinstance(la_mapa.grid[cursorMain.col][cursorMain.row], Ground)):
-								if cursorMain.pawn!=None:
-									la_mapa.grid[cursorMain.pawn.x][cursorMain.pawn.y] = la_mapa.g
-									cursorMain.pawn.move(cursorMain.col, cursorMain.row, screen,la_mapa.grid)
 							cursorMain.displayCursorPos()
 
 				if all(pawn.canMove == 0 for pawn in tabPawn) and all(pawn.canAttack == False for pawn in tabPawn):
@@ -119,8 +120,12 @@ def main():
 		if tour == 2:
 			print("Au tour de l'IA")
 			for i in tabEnemy:
-				i.canMove=True
+				i.canMove=7
 				i.canAttack=True
+
+			
+
+			
 
 			while tour == 2:
 				screen.fill(BLACK)
