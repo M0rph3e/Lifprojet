@@ -9,6 +9,7 @@ from classes.ground import Ground
 import pygame
 import time
 import os
+import sys
 
 WIDTH = 400 
 HEIGHT = 400
@@ -33,9 +34,9 @@ def main():
 	pawn3 = Pawn(16,18,20,1,UNIT)
 		
 
-	enemy1 = PawnAI(5,1,0,0,ENEMY)
-	enemy2 = PawnAI(5,3,0,0,ENEMY)
-	enemy3 = PawnAI(7,1,0,0,ENEMY)
+	enemy1 = PawnAI(17,17,0,0,ENEMY)
+	enemy2 = PawnAI(16,16,0,0,ENEMY)
+	enemy3 = PawnAI(15,15,0,0,ENEMY)
 
 	tabPawn = [pawn1,pawn2,pawn3]
 	tabEnemy = [enemy1, enemy2, enemy3]
@@ -48,11 +49,11 @@ def main():
 
 	tour = 1
 	#Boucle principale de jeu
-	while (tabPawn!=False or tabEnemy!=False):
+	while not done:
 		
 		#Ceci permet de limiter le FPS dans jeu
 		clock.tick(FPS)
-
+		print(tabEnemy)
 		###### TOUR JOUEUR ######
 		if tour == 1:
 			print('Au tour du Joueur')
@@ -63,7 +64,11 @@ def main():
 
 			while tour == 1:
 				screen.fill(BLACK)
-		
+
+				if(tabPawn == [] or tabEnemy == []):
+					done = True
+					break
+
 				for i in tabPawn:
 					la_mapa.add_pawn(i)
 		
@@ -75,11 +80,13 @@ def main():
 				#Gestion des evenements
 				for event in pygame.event.get():
 						if (event.type == pygame.QUIT):
-								done = True
+							pygame.quit()
+							sys.exit()
 
 						if (event.type == pygame.KEYDOWN):
 							if event.key == pygame.K_ESCAPE:
-								done = True
+								pygame.quit()
+								sys.exit()
 							if event.key == pygame.K_p:
 								tour = 2
 
@@ -161,6 +168,11 @@ def main():
 
 				if all(enemy.canMove == 0 for enemy in tabEnemy):
 					tour=1
+
+				if(tabPawn == [] or tabEnemy == []):
+					done = True
+					break
+					
 
 	print('FIN DE LA PARTIE')				
 
