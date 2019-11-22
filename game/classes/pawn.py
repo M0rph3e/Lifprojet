@@ -25,26 +25,25 @@ class Pawn:
         print(path)
         firstCase = True
         if path != None:
-            if len(path)-1 <= self.canMove:
-                for i in path:
-                    self.remove_pawn(screen, 20, 20)
-                    
-                    self.x, self.y = i
+            for i in path:
+                if self.canMove<=0:
+                    break
+                self.remove_pawn(screen, 20, 20)
+                
+                self.x, self.y = i
 
-                    self.draw_pawn(screen, 20, 20)
-                    
-                    print("i :",i)
-                    if not firstCase:
-                        self.canMove -= 1
-                        print("Case restantes", self.canMove)
+                self.draw_pawn(screen, 20, 20)
+                
+                print("i :",i)
+                if not firstCase:
+                    self.canMove -= 1
+                    print("Case restantes", self.canMove)
+                
 
-                    firstCase=False
+                firstCase=False
 
-                    time.sleep(0.25)
-                    pygame.display.flip()
-            else:
-                print('Vous pouvez vous déplacer de ', self.canMove, ' cases maximum')
-
+                time.sleep(0.25)
+                pygame.display.flip()
         else:
             print("Trop loin")
 
@@ -132,7 +131,7 @@ def astar(maze, start, end):
     open_list.append(start_node)
 
     # Loop until you find the end
-    while len(open_list) > 0 and len(closed_list) < 8:
+    while len(open_list) > 0 and len(closed_list) < 400:
 
         # Get the current node
         current_node = open_list[0]
@@ -165,7 +164,9 @@ def astar(maze, start, end):
             if node_position[0] > (len(maze) - 1) or node_position[0] < 0 or node_position[1] > (len(maze[len(maze)-1]) -1) or node_position[1] < 0:
                 continue
 
-
+            #Check if the neighbor is already in closed list (j'ai rajouté lol)
+            if Node(current_node,node_position) in closed_list:
+                continue
             # Make sure walkable terrain
             if (isinstance(maze[node_position[0]][node_position[1]], Wall) or isinstance(maze[node_position[0]][node_position[1]], Pawn)):
                 continue

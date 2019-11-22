@@ -34,9 +34,9 @@ def main():
 	pawn3 = Pawn(16,18,20,1,UNIT)
 		
 
-	enemy1 = PawnAI(17,17,0,0,ENEMY)
-	enemy2 = PawnAI(16,16,0,0,ENEMY)
-	enemy3 = PawnAI(15,15,0,0,ENEMY)
+	enemy1 = PawnAI(5,3,0,0,ENEMY)
+	enemy2 = PawnAI(7,3,0,0,ENEMY)
+	enemy3 = PawnAI(5,1,0,0,ENEMY)
 
 	tabPawn = [pawn1,pawn2,pawn3]
 	tabEnemy = [enemy1, enemy2, enemy3]
@@ -53,7 +53,6 @@ def main():
 		
 		#Ceci permet de limiter le FPS dans jeu
 		clock.tick(FPS)
-		print(tabEnemy)
 		###### TOUR JOUEUR ######
 		if tour == 1:
 			print('Au tour du Joueur')
@@ -157,7 +156,7 @@ def main():
 				#permet de faire bouger les pions ennemis 
 				for j in tabEnemy:
 					la_mapa.grid[j.x][j.y] = la_mapa.g
-					j.move(screen, la_mapa.grid)
+					j.move(screen, la_mapa.grid,tabPawn)
 
 
 				for event in pygame.event.get():

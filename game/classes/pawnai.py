@@ -7,6 +7,7 @@ from classes.wall import Wall
 from threading import Thread
 from classes.pawn import Pawn
 import random
+import sys
 DISTANCE_DEPL_MAX=7
 
 
@@ -23,13 +24,21 @@ class PawnAI(Pawn):
         self.canMove=DISTANCE_DEPL_MAX
         self.canAttack=True
 
-    def move(self, screen, grid_in):
-        new_x = random.randrange(self.x-self.canMove,self.x+self.canMove+1,1)
-        max = abs(new_x-self.x)
-        new_y = random.randrange(self.x-self.canMove+max,self.x+self.canMove-max+1,1)
+    def move(self, screen, grid_in, tabPawn):
+        dist_min = sys.maxsize
+        posmin = self.get_position()
+        for i in tabPawn:
+            distance = self.get_distance(i.x,i.y)
+            if distance < dist_min:
+                dist_min=distance
+                posmin = i.get_position()
+        
+             
         pos_ini = (self.x,self.y)
-        pos_fin = (new_x,new_y)
+        pos_fin = posmin
         print("Position initiale :", pos_ini)
-        print("Position finale :", pos_fin)
-        Pawn.move(self, new_x,new_y, screen, grid_in)
+        print("Position finale :", posmin[0]," , ", posmin[1])
+        Pawn.move(self, posmin[0]-1,posmin[1], screen, grid_in)
         self.canMove=0
+
+    
