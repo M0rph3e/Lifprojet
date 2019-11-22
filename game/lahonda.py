@@ -48,7 +48,7 @@ def main():
 
 	tour = 1
 	#Boucle principale de jeu
-	while (tabPawn!=False and tabEnemy!=False):
+	while (tabPawn!=False or tabEnemy!=False):
 		
 		#Ceci permet de limiter le FPS dans jeu
 		clock.tick(FPS)
@@ -95,7 +95,9 @@ def main():
 							if(isinstance(la_mapa.grid[cursorMain.col][cursorMain.row], Pawn)):
 								if(la_mapa.grid[cursorMain.col][cursorMain.row].team == UNIT):
 									print('PLAYER SELECTED')
-									cursorMain.pawn = la_mapa.grid[cursorMain.col][cursorMain.row]
+									for i in tabPawn:
+										if(la_mapa.grid[cursorMain.col][cursorMain.row] == i):
+											cursorMain.pawn = i
 									#for i in range (cursorMain.col-7,cursorMain.col+7):
 									#	for j in range (cursorMain.row-7,cursorMain.row+7):
 									#		diff_x = abs(cursorMain.col - i)
@@ -105,8 +107,13 @@ def main():
 
 								if(la_mapa.grid[cursorMain.col][cursorMain.row].team == ENEMY):
 									print("ENEMY SELECTED")
-									cursorMain.enemy = la_mapa.grid[cursorMain.col][cursorMain.row]
-									cursorMain.pawn.attack(cursorMain.enemy, la_mapa)
+									for i in tabEnemy:
+										if(la_mapa.grid[cursorMain.col][cursorMain.row] == i):
+											if(cursorMain.pawn.attack(i)):
+												la_mapa.grid[i.x][i.y] = la_mapa.g
+												tabEnemy.remove(i)
+
+									
 									
 							cursorMain.displayCursorPos()
 

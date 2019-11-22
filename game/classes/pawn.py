@@ -29,19 +29,10 @@ class Pawn:
                 for i in path:
                     self.remove_pawn(screen, 20, 20)
                     
-                    self.x = i[0]
+                    self.x, self.y = i
 
                     self.draw_pawn(screen, 20, 20)
-                    time.sleep(0.25)
-                    pygame.display.flip()  
                     
-                    self.remove_pawn(screen, 20, 20)
-
-                    self.y = i[1]
-
-
-                    self.draw_pawn(screen, 20, 20)
-
                     print("i :",i)
                     if not firstCase:
                         self.canMove -= 1
@@ -68,21 +59,14 @@ class Pawn:
     def get_position(self):
         return (self.x,self.y)
 
-    def attack(self, pion, lamap):
+    def attack(self, pion):
         if(self.get_adjacent(pion) and (self.team != pion.team)):	
             print("Oponent HP", pion.hp)
             pion.hp -= self._difference_attaque(self.att,pion.defense)
             print("After attack", pion.hp)
             if pion.hp<=0:
-                lamap.grid[pion.x][pion.y]=lamap.g
-                print("Il est mort")
-           # else:
-                #print("Current HP", self.hp)
-                #self.hp -= self._difference_attaque(pion.att,self.defense)
-                #print("After attack", self.hp)
-                #if self.hp <= 0:
-                    #lamap.grid[self.x][self.y]=lamap.g
-                    #print("Vous êtes pas doués")
+                return True
+
             self.canAttack=False
         else:
             print("Il est loin pour attaquer, pelo")
