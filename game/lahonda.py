@@ -162,6 +162,7 @@ def main():
 				for j in tabEnemy:
 					la_mapa.grid[j.x][j.y] = la_mapa.g
 					j.move(screen, la_mapa.grid, tabPawn)
+					la_mapa.add_pawn(j)
 					
 					
 					
