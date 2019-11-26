@@ -91,7 +91,7 @@ def main():
 								sys.exit()
 							if event.key == pygame.K_p:
 								tour = 2
-							if event.key == pygame.K_a:
+							if event.key == pygame.K_d:
 								la_mapa.afficher()
 
 						if (event.type == pygame.MOUSEBUTTONDOWN):
