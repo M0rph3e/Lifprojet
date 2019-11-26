@@ -29,14 +29,14 @@ def main():
 
 	clock = pygame.time.Clock()
 
-	pawn1 = Pawn(18,18,20,1,UNIT)
-	pawn2 = Pawn(18,16,20,1,UNIT)
-	pawn3 = Pawn(16,18,20,1,UNIT)
+	pawn1 = Pawn(18, 16, 20, 5, 3, UNIT)
+	pawn2 = Pawn(16, 16, 20, 5, 3, UNIT)
+	pawn3 = Pawn(16, 18, 20, 5, 3, UNIT)
 		
 
-	enemy1 = PawnAI(5,3,0,0,ENEMY)
-	enemy2 = PawnAI(7,3,0,0,ENEMY)
-	enemy3 = PawnAI(5,1,0,0,ENEMY)
+	enemy1 = PawnAI(5, 3, 15, 10, 5, ENEMY)
+	enemy2 = PawnAI(5, 5, 15, 10, 5, ENEMY)
+	enemy3 = PawnAI(7, 5, 15, 10, 5, ENEMY)
 
 	tabPawn = [pawn1,pawn2,pawn3]
 	tabEnemy = [enemy1, enemy2, enemy3]
@@ -130,6 +130,7 @@ def main():
 							cursorMain.displayCursorPos()
 
 				if all(pawn.canMove == 0 for pawn in tabPawn) and all(pawn.canAttack == False for pawn in tabPawn):
+					
 					tour=2
 					print('fin du tour')
 		
@@ -157,11 +158,13 @@ def main():
 					la_mapa.add_pawn(i)
 
 				la_mapa.draw_grid(screen)
-			
+
+				
+
 				#permet de faire bouger les pions ennemis 
 				for j in tabEnemy:
 					la_mapa.grid[j.x][j.y] = la_mapa.g
-					j.move(screen, la_mapa.grid, tabPawn)
+					j.move(screen, la_mapa.grid, j.choseTarget(tabPawn))
 					la_mapa.add_pawn(j)
 					
 					

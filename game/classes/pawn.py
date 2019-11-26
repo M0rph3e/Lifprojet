@@ -8,17 +8,19 @@ from threading import Thread
 DISTANCE_DEPL_MAX=7
 
 class Pawn:
-    def __init__(self, x, y, att, defense, team):
+    def __init__(self, x, y, hp, att, defense, team):
         self.x = x
         self.y = y
         self.defense=defense
         self.att=att
-        self.hp = 20 #j'ai changé
+        self.hp = hp #j'ai changé # j'ai changé aussi
         self.move_range = 5
         self.attack_range = 1
         self.team = team
         self.canMove=DISTANCE_DEPL_MAX
         self.canAttack=True
+    
+
     
     def move(self, x2, y2,screen,grid_in):
         path = astar(grid_in,(self.x,self.y),(x2,y2))
