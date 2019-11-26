@@ -168,7 +168,9 @@ def astar(maze, start, end):
             if Node(current_node,node_position) in closed_list:
                 continue
             # Make sure walkable terrain
-            if (isinstance(maze[node_position[0]][node_position[1]], Wall) or isinstance(maze[node_position[0]][node_position[1]], Pawn)):
+            #if (isinstance(maze[node_position[0]][node_position[1]], Wall) or isinstance(maze[node_position[0]][node_position[1]], Pawn) or isinstance(maze[node_position[0]][node_position[1]], PawnAI)):
+            if (not isinstance(maze[node_position[0]][node_position[1]], Ground)):
+            
                 continue
             # Create new node
             new_node = Node(current_node, node_position)

@@ -47,5 +47,13 @@ class Map:
 	def add_pawn(self, pawn):
 		self.grid[pawn.x][pawn.y] = pawn
 
-	
-	
+	def afficher(self):
+		for row in range(self.size):
+			for column in range(self.size):
+				if(isinstance(self.grid[column][row], Ground)):
+					print("g",  end = "")
+				if(isinstance(self.grid[column][row], Wall)):
+					print("W",  end = "")
+				if(isinstance(self.grid[column][row], Pawn)):
+					print("P",  end = "")
+			print("\n")	

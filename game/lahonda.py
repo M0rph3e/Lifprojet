@@ -62,6 +62,9 @@ def main():
 				i.canAttack=True
 
 			while tour == 1:
+
+				
+
 				screen.fill(BLACK)
 
 				if(tabPawn == [] or tabEnemy == []):
@@ -88,6 +91,8 @@ def main():
 								sys.exit()
 							if event.key == pygame.K_p:
 								tour = 2
+							if event.key == pygame.K_a:
+								la_mapa.afficher()
 
 						if (event.type == pygame.MOUSEBUTTONDOWN):
 							# get the position of the mouse
@@ -156,7 +161,11 @@ def main():
 				#permet de faire bouger les pions ennemis 
 				for j in tabEnemy:
 					la_mapa.grid[j.x][j.y] = la_mapa.g
-					j.move(screen, la_mapa.grid,tabPawn)
+					j.move(screen, la_mapa.grid, tabPawn)
+					
+					
+					
+					
 
 
 				for event in pygame.event.get():

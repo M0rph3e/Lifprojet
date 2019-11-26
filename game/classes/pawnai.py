@@ -34,11 +34,11 @@ class PawnAI(Pawn):
                 posmin = i.get_position()
         
              
-        pos_ini = (self.x,self.y)
-        pos_fin = posmin
-        print("Position initiale :", pos_ini)
+        print("Position initiale :", (self.x,self.y))
         print("Position finale :", posmin[0]," , ", posmin[1])
-        Pawn.move(self, posmin[0]-1,posmin[1], screen, grid_in)
-        self.canMove=0
 
+
+        Pawn.move(self, posmin[0]-1,posmin[1], screen, grid_in)
+
+        self.canMove=0
     
