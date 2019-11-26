@@ -23,7 +23,7 @@ class Pawn:
 
     
     def move(self, x2, y2,screen,grid_in):
-        path = astar(grid_in,(self.x,self.y),(x2,y2))
+        path = astar(grid_in,self.get_position(),(x2,y2))
         print(path)
         firstCase = True
         if path != None:
@@ -90,7 +90,7 @@ class Pawn:
     # elle permet de traité le cas ou défense>attaque qui renverra 0 au lieu d'un nb négatif (rajoutant des pv)
     def _difference_attaque(self, attaque, defense):
         diff=(attaque-defense)
-        print("Difference",diff)
+        #print("Difference",diff)
         if diff > 0:
             return diff
         else:

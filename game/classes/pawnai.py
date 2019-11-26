@@ -6,6 +6,8 @@ from classes.ground import Ground
 from classes.wall import Wall
 from threading import Thread
 from classes.pawn import Pawn
+from classes.pawn import astar
+
 import random
 import sys
 DISTANCE_DEPL_MAX=7
@@ -24,12 +26,20 @@ class PawnAI(Pawn):
         self.canMove=DISTANCE_DEPL_MAX
         self.canAttack=True
 
-    def choseTarget(self, tabPawn):
-        priority = [0,0,0]
+    def choseTarget(self, tabPawn, grid):
+        priority = []
+        
+        for i in range(0, len(tabPawn)):
+            priority.append(0)
 
-        for i in tabPawn:         
-            priority[tabPawn.index(i)] -= self.get_distance(i.x,i.y) #priorite en fonction de distance
-            priority[tabPawn.index(i)] -= i.hp
+
+        print(self.get_position())
+        for i in tabPawn:
+            if(astar(grid, self.get_position(), (i.x-1, i.y)) != None):
+                priority[tabPawn.index(i)] -= self.get_distance(i.x,i.y) #priorite en fonction de distance
+            else:
+                priority[tabPawn.index(i)] -= 10000000000000
+            priority[tabPawn.index(i)] -= i.hp 
             priority[tabPawn.index(i)] += self._difference_attaque(i.att, i.defense)
         
         print(priority)
@@ -43,8 +53,8 @@ class PawnAI(Pawn):
             posmin = target.get_position()
         
              
-        print("Position initiale :", (self.x,self.y))
-        print("Position finale :", posmin[0]," , ", posmin[1])
+        #print("Position initiale :", (self.x,self.y))
+        #print("Position finale :", posmin[0]," , ", posmin[1])
 
 
         Pawn.move(self, posmin[0]-1,posmin[1], screen, grid_in)
