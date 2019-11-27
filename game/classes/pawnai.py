@@ -27,27 +27,36 @@ class PawnAI(Pawn):
         self.canAttack=True
 
     def choseTarget(self, tabPawn, grid):
-        priority = []
+        if tabPawn != []:
+            priority = []
+            
+            for i in range(0, len(tabPawn)):
+                priority.append(0)
+
+
+            print(self.get_position())
+            for i in tabPawn:
+                if(astar(grid, self.get_position(), (i.x-1, i.y)) != None):
+                    priority[tabPawn.index(i)] -= self.get_distance(i.x,i.y) #priorite en fonction de distance
+                else:
+                    priority[tabPawn.index(i)] -= 10000000000000
+                priority[tabPawn.index(i)] -= i.hp 
+                priority[tabPawn.index(i)] += self._difference_attaque(i.att, i.defense)
+            
+            print(priority)
+            if priority != []:
+                return tabPawn[priority.index(max(priority))]
+        else: 
+            return self
         
-        for i in range(0, len(tabPawn)):
-            priority.append(0)
 
-
-        print(self.get_position())
-        for i in tabPawn:
-            if(astar(grid, self.get_position(), (i.x-1, i.y)) != None):
-                priority[tabPawn.index(i)] -= self.get_distance(i.x,i.y) #priorite en fonction de distance
-            else:
-                priority[tabPawn.index(i)] -= 10000000000000
-            priority[tabPawn.index(i)] -= i.hp 
-            priority[tabPawn.index(i)] += self._difference_attaque(i.att, i.defense)
-        
-        print(priority)
-        return tabPawn[priority.index(max(priority))]
-
-    def attackTarget(self, target):
+    def attackTarget(self, target, tabPawn, lamapa):
         if Pawn.get_adjacent(self,target):
-            Pawn.attack(self, target) 
+            if Pawn.attack(self, target) == True:
+                for i in tabPawn:
+                    if(lamapa.grid[target.x][target.y] == i):
+                        lamapa.grid[i.x][i.y] = lamapa.g
+                        tabPawn.remove(i)
 
 
     def move(self, screen, grid_in, target):
