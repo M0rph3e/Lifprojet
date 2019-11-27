@@ -45,6 +45,11 @@ class PawnAI(Pawn):
         print(priority)
         return tabPawn[priority.index(max(priority))]
 
+    def attackTarget(self, target):
+        if Pawn.get_adjacent(self,target):
+            Pawn.attack(self, target) 
+
+
     def move(self, screen, grid_in, target):
         dist_min = sys.maxsize
         distance = self.get_distance(target.x,target.y)
