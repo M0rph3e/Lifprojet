@@ -36,14 +36,16 @@ class PawnAI(Pawn):
 
             print(self.get_position())
             for i in tabPawn:
-                if(astar(grid, self.get_position(), (i.x-1, i.y)) != None):
+                path=astar(grid, self.get_position(), (i.x, i.y))
+                print(path)
+                if(path != None):
                     priority[tabPawn.index(i)] -= self.get_distance(i.x,i.y) #priorite en fonction de distance
                 else:
                     priority[tabPawn.index(i)] -= 10000000000000
                 priority[tabPawn.index(i)] -= i.hp 
                 priority[tabPawn.index(i)] += self._difference_attaque(i.att, i.defense)
-            
-            print(priority)
+
+            #print(priority)
             if priority != []:
                 return tabPawn[priority.index(max(priority))]
         else: 
@@ -57,6 +59,7 @@ class PawnAI(Pawn):
                     if(lamapa.grid[target.x][target.y] == i):
                         lamapa.grid[i.x][i.y] = lamapa.g
                         tabPawn.remove(i)
+                        
 
 
     def move(self, screen, grid_in, target):

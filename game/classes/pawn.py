@@ -25,29 +25,32 @@ class Pawn:
     def move(self, x2, y2,screen,grid_in):
         path = astar(grid_in,self.get_position(),(x2,y2))
         print(path)
-        firstCase = True
-        if path != None:
-            for i in path:
-                if self.canMove<=0:
-                    break
-                self.remove_pawn(screen, 20, 20)
-                
-                self.x, self.y = i
+        if (self.team==UNIT and len(path) <= self.canMove) or self.team==ENEMY:
+            firstCase = True
+            if path != None:
+                for i in path:
+                    if self.canMove<=0:
+                        break
+                    self.remove_pawn(screen, 20, 20)
+                    
+                    self.x, self.y = i
 
-                self.draw_pawn(screen, 20, 20)
-                
-                print("i :",i)
-                if not firstCase:
-                    self.canMove -= 1
-                    print("Case restantes", self.canMove)
-                
+                    self.draw_pawn(screen, 20, 20)
+                    
+                    #print("i :",i)
+                    if not firstCase:
+                        self.canMove -= 1
+                        print("Case restantes", self.canMove)
+                    
 
-                firstCase=False
+                    firstCase=False
 
-                time.sleep(0.25)
-                pygame.display.flip()
+                    time.sleep(0.25)
+                    pygame.display.flip()
+            else:
+                print("Trop loin")
         else:
-            print("Trop loin")
+            print('Vous pouvez vous déplacer de ', self.canMove, ' cases seulement')
 
 
     def draw_pawn(self, screen, height, width):	
@@ -133,7 +136,7 @@ def astar(maze, start, end):
     open_list.append(start_node)
 
     # Loop until you find the end
-    while len(open_list) > 0 and len(closed_list) < 400:
+    while len(open_list) > 0 :
 
         # Get the current node
         current_node = open_list[0]
@@ -154,6 +157,9 @@ def astar(maze, start, end):
             while current is not None:
                 path.append(current.position)
                 current = current.parent
+            if (not isinstance(maze[end_node.position[0]][end_node.position[1]], Ground)):
+               print('yes')
+               path.pop(0)
             return path[::-1] # Return reversed path
 
         # Generate children
@@ -171,9 +177,9 @@ def astar(maze, start, end):
                 continue
             # Make sure walkable terrain
             #if (isinstance(maze[node_position[0]][node_position[1]], Wall) or isinstance(maze[node_position[0]][node_position[1]], Pawn) or isinstance(maze[node_position[0]][node_position[1]], PawnAI)):
-            if (not isinstance(maze[node_position[0]][node_position[1]], Ground)):
-            
-                continue
+            if node_position[0] != end_node.position[0] or node_position[1] != end_node.position[1]:
+                if (not isinstance(maze[node_position[0]][node_position[1]], Ground)): 
+                    continue
             # Create new node
             new_node = Node(current_node, node_position)
             # Append

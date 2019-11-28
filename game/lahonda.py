@@ -166,6 +166,7 @@ def main():
 					la_mapa.grid[j.x][j.y] = la_mapa.g
 					j.move(screen, la_mapa.grid, j.choseTarget(tabPawn, la_mapa.grid))
 					j.attackTarget(j.choseTarget(tabPawn, la_mapa.grid), tabPawn, la_mapa)
+					
 					la_mapa.add_pawn(j)
 					
 					
