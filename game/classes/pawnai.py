@@ -26,7 +26,7 @@ class PawnAI(Pawn):
         self.canMove=DISTANCE_DEPL_MAX
         self.canAttack=True
 
-    def choseTarget(self, tabPawn, grid):
+    def choseTarget(self, tabPawn, tabEnemy, grid):
         if tabPawn != []:
             priority = []
             
@@ -36,14 +36,29 @@ class PawnAI(Pawn):
 
             print(self.get_position())
             for i in tabPawn:
-                path=astar(grid, self.get_position(), (i.x, i.y))
+                path=astar(grid, self.get_position(), i.get_position())
+                
                 print(path)
+                
                 if(path != None):
-                    priority[tabPawn.index(i)] -= self.get_distance(i.x,i.y) #priorite en fonction de distance
+                    priority[tabPawn.index(i)] -= len(path) * 0.5 #priorite en fonction de distance
                 else:
-                    priority[tabPawn.index(i)] -= 10000000000000
-                priority[tabPawn.index(i)] -= i.hp 
-                priority[tabPawn.index(i)] += self._difference_attaque(i.att, i.defense)
+                    priority[tabPawn.index(i)] -= 0
+                
+                priority[tabPawn.index(i)] -= i.hp * 2
+
+                if(self._difference_attaque(i.att, i.defense)<1):
+                    for j in tabEnemy:
+                        if(self.get_position() != j.get_position()):
+                            pote_proche = astar(grid, i.get_position(), j.get_position())
+
+                            if(len(pote_proche)<=7):
+                                if(self._difference_attaque(i.att, i.defense)+j._difference_attaque(i.att, i.defense)>=2):
+                                    priority[tabPawn.index(i)] += 5
+
+                                
+                
+                #priority[tabPawn.index(i)] += self._difference_attaque(i.att, i.defense)
 
             #print(priority)
             if priority != []:
@@ -72,9 +87,9 @@ class PawnAI(Pawn):
              
         #print("Position initiale :", (self.x,self.y))
         #print("Position finale :", posmin[0]," , ", posmin[1])
-
-
-        Pawn.move(self, posmin[0]-1,posmin[1], screen, grid_in)
+        
+        
+        Pawn.move(self, posmin[0],posmin[1], screen, grid_in)
 
         self.canMove=0
     
