@@ -38,7 +38,7 @@ class PawnAI(Pawn):
             for i in tabPawn:
                 path=astar(grid, self.get_position(), i.get_position())
                 
-                print(path)
+                #print(path)
                 
                 if(path != None):
                     priority[tabPawn.index(i)] -= len(path) * 0.5 #priorite en fonction de distance

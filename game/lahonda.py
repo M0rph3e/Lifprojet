@@ -164,8 +164,8 @@ def main():
 				#permet de faire bouger les pions ennemis 
 				for j in tabEnemy:
 					la_mapa.grid[j.x][j.y] = la_mapa.g
-					j.move(screen, la_mapa.grid, j.choseTarget(tabPawn, la_mapa.grid))
-					j.attackTarget(j.choseTarget(tabPawn, la_mapa.grid), tabPawn, la_mapa)
+					j.move(screen, la_mapa.grid, j.choseTarget(tabPawn, tabEnemy, la_mapa.grid))
+					j.attackTarget(j.choseTarget(tabPawn, tabEnemy, la_mapa.grid), tabPawn, la_mapa)
 					
 					la_mapa.add_pawn(j)
 					
