@@ -74,7 +74,7 @@ class PawnAI(Pawn):
         #print("Position finale :", posmin[0]," , ", posmin[1])
 
 
-        Pawn.move(self, posmin[0]-1,posmin[1], screen, grid_in)
+        Pawn.move(self, posmin[0],posmin[1], screen, grid_in)
 
         self.canMove=0
     
