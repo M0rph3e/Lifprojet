@@ -23,9 +23,13 @@ class Pawn:
 
     
     def move(self, x2, y2,screen,grid_in):
-        path = astar(grid_in,self.get_position(),(x2,y2))
+        if self.team==UNIT:
+            path = astar(grid_in,self.get_position(),(x2,y2))
+        elif self.team==ENEMY:
+            pos_fin = self.getClosestAdjacent((x2,y2),grid_in)
+            path = astar(grid_in,self.get_position(),pos_fin)
         print(path)
-        if (self.team==UNIT and len(path) <= self.canMove) or self.team==ENEMY:
+        if (self.team==UNIT and len(path) <= self.canMove + 1) or self.team==ENEMY:
             firstCase = True
             if path != None:
                 for i in path:
@@ -68,10 +72,11 @@ class Pawn:
             print("Oponent HP", pion.hp)
             pion.hp -= self._difference_attaque(self.att,pion.defense)
             print("After attack", pion.hp)
+            self.canAttack=False
             if pion.hp<=0:
                 return True
 
-            self.canAttack=False
+            
         else:
             print("Il est loin pour attaquer, pelo")
 
@@ -87,7 +92,37 @@ class Pawn:
         diff_x = abs(self.x - x2)
         diff_y = abs(self.y - y2)
         return diff_x + diff_y
-        
+
+    def getClosestAdjacent(self,endPos,grid):
+
+        options = []
+        leftPos = (endPos[0]-1,endPos[1])
+        rightPos = (endPos[0]+1,endPos[1])
+        bottomPos = (endPos[0],endPos[1]-1)
+        topPos = (endPos[0],endPos[1]+1)
+
+        left = self.get_distance(leftPos[0],leftPos[1])
+        right = self.get_distance(rightPos[0],rightPos[1])
+        bottom = self.get_distance(bottomPos[0],bottomPos[1])
+        top = self.get_distance(topPos[0],topPos[1])
+
+        options.append((left,leftPos))
+        options.append((right,rightPos))
+        options.append((bottom,bottomPos))
+        options.append((top,topPos))
+
+        options.sort(key=lambda x: x[0])
+
+        #print(options)
+        pos_fin = None
+        for pos in options:
+             if (isinstance(grid[pos[1][0]][pos[1][1]], Ground)): 
+                 pos_fin =  pos[1]
+                 return pos_fin
+        if pos_fin is None:
+            return self.getClosestAdjacent(options[0][1],grid)
+
+
 
     #Cette méthode permet de faire la différence entre l'attaque de l'attaquant et la défense de celui qui est attaqué,
     # elle permet de traité le cas ou défense>attaque qui renverra 0 au lieu d'un nb négatif (rajoutant des pv)
@@ -119,8 +154,14 @@ class Node():
         return self.position == other.position
 
 
+
+        
+
+
+
 def astar(maze, start, end):
     """Returns a list of tuples as a path from the given start to the given end in the given maze"""
+
 
     # Create start and end node
     start_node = Node(None, start)
@@ -157,9 +198,6 @@ def astar(maze, start, end):
             while current is not None:
                 path.append(current.position)
                 current = current.parent
-            if (not isinstance(maze[end_node.position[0]][end_node.position[1]], Ground)):
-               path.pop(0)
-               
             return path[::-1] # Return reversed path
 
         # Generate children

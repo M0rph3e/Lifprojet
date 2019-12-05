@@ -29,14 +29,14 @@ def main():
 
 	clock = pygame.time.Clock()
 
-	pawn1 = Pawn(18, 16, 20, 5, 3, UNIT)
-	pawn2 = Pawn(16, 16, 20, 5, 3, UNIT)
-	pawn3 = Pawn(16, 18, 20, 5, 3, UNIT)
+	pawn1 = Pawn(18, 16, 20, 15, 15, UNIT)
+	pawn2 = Pawn(16, 16, 20, 15, 15, UNIT)
+	pawn3 = Pawn(16, 18, 20, 15, 15, UNIT)
 		
 
-	enemy1 = PawnAI(5, 3, 15, 10, 5, ENEMY)
-	enemy2 = PawnAI(5, 5, 15, 10, 5, ENEMY)
-	enemy3 = PawnAI(7, 5, 15, 10, 5, ENEMY)
+	enemy1 = PawnAI(5, 3, 15, 3, 3, ENEMY)
+	enemy2 = PawnAI(5, 5, 15, 3, 3, ENEMY)
+	enemy3 = PawnAI(7, 5, 15, 18, 18, ENEMY)
 
 	tabPawn = [pawn1,pawn2,pawn3]
 	tabEnemy = [enemy1, enemy2, enemy3]
@@ -60,6 +60,9 @@ def main():
 			for i in tabPawn:
 				i.canMove=7
 				i.canAttack=True
+
+			
+			#pawn2.getClosestAdjacent(enemy2.get_position(),la_mapa.grid)
 
 			while tour == 1:
 
@@ -164,9 +167,9 @@ def main():
 				#permet de faire bouger les pions ennemis 
 				for j in tabEnemy:
 					la_mapa.grid[j.x][j.y] = la_mapa.g
-					j.move(screen, la_mapa.grid, j.choseTarget(tabPawn, tabEnemy, la_mapa.grid))
-					j.attackTarget(j.choseTarget(tabPawn, tabEnemy, la_mapa.grid), tabPawn, la_mapa)
-					
+					target = j.choseTarget(tabPawn, tabEnemy, la_mapa.grid)
+					j.move(screen, la_mapa.grid,target)
+					j.attackTarget(target, tabPawn, la_mapa)	
 					la_mapa.add_pawn(j)
 					
 					
@@ -174,11 +177,11 @@ def main():
 					
 
 
-				for event in pygame.event.get():
+				#for event in pygame.event.get():
 
-						if (event.type == pygame.KEYDOWN):
-							if event.key == pygame.K_p:
-								tour = 1
+				#		if (event.type == pygame.KEYDOWN):
+				#			if event.key == pygame.K_p:
+				#				tour = 1
 				###### DEPLACEMENT ET ATTAQUE IA ######
 
 				if all(enemy.canMove == 0 for enemy in tabEnemy):

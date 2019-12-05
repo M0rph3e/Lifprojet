@@ -27,6 +27,18 @@ class Cursor:
             except IndexError:
                 pass
 
+    def displayCursorState(self):
+        if self.wall:
+            print('|| Wall ||')
+        elif self.pawn==None:
+            print("|| Ground ||")
+        if self.pawn != None:
+            print('# Player #')
+        if self.enemy != None:
+            print('# Enemy #')
+
+
+
 
     def displayCursorPos(self):
         print('ROW : ', self.row)

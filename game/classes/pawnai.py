@@ -29,14 +29,22 @@ class PawnAI(Pawn):
     def choseTarget(self, tabPawn, tabEnemy, grid):
         if tabPawn != []:
             priority = []
+            groupePote = []
+
+            
             
             for i in range(0, len(tabPawn)):
                 priority.append(0)
 
 
-            print(self.get_position())
+            #print(self.get_position())
             for i in tabPawn:
-                path=astar(grid, self.get_position(), i.get_position())
+                degatsGroupe = self._difference_attaque(self.att, i.defense)
+
+                pos_i = self.getClosestAdjacent(i.get_position(),grid)
+                print('ye')
+                path=astar(grid, self.get_position(), pos_i)
+                print('yo')
                 
                 #print(path)
                 
@@ -47,22 +55,31 @@ class PawnAI(Pawn):
                 
                 priority[tabPawn.index(i)] -= i.hp * 2
 
-                if(self._difference_attaque(i.att, i.defense)<1):
+                if(self._difference_attaque(self.att, i.defense)<8):
                     for j in tabEnemy:
                         if(self.get_position() != j.get_position()):
-                            pote_proche = astar(grid, i.get_position(), j.get_position())
+
+                            pos_i = j.getClosestAdjacent(i.get_position(),grid)
+                            pote_proche = astar(grid, j.get_position(), pos_i)
 
                             if(len(pote_proche)<=7):
-                                if(self._difference_attaque(i.att, i.defense)+j._difference_attaque(i.att, i.defense)>=2):
-                                    priority[tabPawn.index(i)] += 5
+                                groupePote.append(j)
 
-                                
-                
-                #priority[tabPawn.index(i)] += self._difference_attaque(i.att, i.defense)
-
-            #print(priority)
+                    for pote in groupePote:
+                        degatsGroupe += self._difference_attaque(pote.att, i.defense)
+                    if degatsGroupe >= i.hp:
+                        priority[tabPawn.index(i)] += 10
+            
+            
             if priority != []:
-                return tabPawn[priority.index(max(priority))]
+                target = tabPawn[priority.index(max(priority))]
+
+                if self._difference_attaque(self.att, target.defense) < self._difference_attaque(target.att, self.defense):
+                    fuite = Pawn(20-target.x, 20-target.y, 0, 0, 0, UNIT)
+                
+                    return fuite
+                else:
+                    return target
         else: 
             return self
         
