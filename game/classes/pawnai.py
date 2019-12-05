@@ -42,7 +42,9 @@ class PawnAI(Pawn):
                 degatsGroupe = self._difference_attaque(self.att, i.defense)
 
                 pos_i = self.getClosestAdjacent(i.get_position(),grid)
+                print('ye')
                 path=astar(grid, self.get_position(), pos_i)
+                print('yo')
                 
                 #print(path)
                 
@@ -57,8 +59,8 @@ class PawnAI(Pawn):
                     for j in tabEnemy:
                         if(self.get_position() != j.get_position()):
 
-                            pos_j = self.getClosestAdjacent(j.get_position(),grid)
-                            pote_proche = astar(grid, self.get_position(), pos_j)
+                            pos_i = j.getClosestAdjacent(i.get_position(),grid)
+                            pote_proche = astar(grid, j.get_position(), pos_i)
 
                             if(len(pote_proche)<=7):
                                 groupePote.append(j)
@@ -71,7 +73,7 @@ class PawnAI(Pawn):
             
             if priority != []:
                 target = tabPawn[priority.index(max(priority))]
-                
+
                 if self._difference_attaque(self.att, target.defense) < self._difference_attaque(target.att, self.defense):
                     fuite = Pawn(20-target.x, 20-target.y, 0, 0, 0, UNIT)
                 
