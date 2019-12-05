@@ -122,6 +122,34 @@ class Pawn:
         if pos_fin is None:
             return self.getClosestAdjacent(options[0][1],grid)
 
+    def getFarthestCorner(self,grid):
+        topLeft=(1,1)
+        topRight=(1,18)
+        bottomLeft=(18,1)
+        bottomRight=(18,18)
+
+        options = []
+        
+
+        tL = self.get_distance(topLeft[0],topLeft[1])
+        tR = self.get_distance(topRight[0],topRight[1])
+        bL = self.get_distance(bottomLeft[0],bottomLeft[1])
+        bR = self.get_distance(bottomRight[0],bottomRight[1])
+
+        options.append((tL,topLeft))
+        options.append((tR,topRight))
+        options.append((bL,bottomLeft))
+        options.append((bR,bottomRight))
+
+        options.sort(key=lambda x: x[0])
+        options.reverse()
+
+        for pos in options:
+             if (isinstance(grid[pos[1][0]][pos[1][1]], Ground)): 
+                 pos_fin =  pos[1]
+                 return pos_fin
+        
+
 
 
     #Cette méthode permet de faire la différence entre l'attaque de l'attaquant et la défense de celui qui est attaqué,

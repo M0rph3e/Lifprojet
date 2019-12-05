@@ -14,8 +14,8 @@ class Map:
 		#le terrain est stocké dans une liste avec 1 - mur, 0 - sol
 		
 		self.grid = [[self.w, self.w, self.w, self.w, self.w, self.w, self.w, self.w, self.w, self.w, self.w, self.w, self.w, self.w, self.w, self.w, self.w, self.w, self.w, self.w],
-					 [self.w, self.g, self.g, self.g, self.g, self.w, self.g, self.g, self.g, self.g, self.g, self.g, self.g, self.g, self.g, self.g, self.g, self.g, self.g, self.w],
-					 [self.w, self.g, self.g, self.g, self.g, self.w, self.g, self.g, self.g, self.g, self.g, self.g, self.g, self.g, self.g, self.g, self.w, self.g, self.g, self.w],
+					 [self.w, self.g, self.g, self.g, self.g, self.g, self.g, self.g, self.g, self.g, self.g, self.g, self.g, self.g, self.g, self.g, self.g, self.g, self.g, self.w],
+					 [self.w, self.g, self.g, self.g, self.g, self.g, self.g, self.g, self.g, self.g, self.g, self.g, self.g, self.g, self.g, self.g, self.w, self.g, self.g, self.w],
 					 [self.w, self.g, self.g, self.g, self.g, self.g, self.g, self.g, self.g, self.g, self.g, self.g, self.g, self.g, self.g, self.g, self.w, self.g, self.g, self.w],
 					 [self.w, self.w, self.w, self.w, self.w, self.w, self.g, self.g, self.w, self.w, self.g, self.g, self.g, self.g, self.g, self.g, self.w, self.g, self.g, self.w],
 					 [self.w, self.g, self.g, self.g, self.g, self.g, self.g, self.g, self.w, self.w, self.g, self.g, self.g, self.g, self.g, self.g, self.w, self.g, self.g, self.w],

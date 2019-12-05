@@ -75,7 +75,8 @@ class PawnAI(Pawn):
                 target = tabPawn[priority.index(max(priority))]
 
                 if self._difference_attaque(self.att, target.defense) < self._difference_attaque(target.att, self.defense):
-                    fuite = Pawn(20-target.x, 20-target.y, 0, 0, 0, UNIT)
+                    posFuite = target.getFarthestCorner(grid)
+                    fuite = Pawn(posFuite[0], posFuite[1], 0, 0, 0, ENEMY)
                 
                     return fuite
                 else:
