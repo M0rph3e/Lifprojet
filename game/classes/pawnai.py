@@ -25,6 +25,7 @@ class PawnAI(Pawn):
         self.team = team
         self.canMove=DISTANCE_DEPL_MAX
         self.canAttack=True
+        self.fuite = False
 
     def choseTarget(self, tabPawn, tabEnemy, grid):
         if tabPawn != []:
@@ -41,10 +42,7 @@ class PawnAI(Pawn):
             for i in tabPawn:
                 degatsGroupe = self._difference_attaque(self.att, i.defense)
 
-                pos_i = self.getClosestAdjacent(i.get_position(),grid)
-                print('ye')
-                path=astar(grid, self.get_position(), pos_i)
-                print('yo')
+                path=astar(grid, self.get_position(), i.get_position(), True)
                 
                 #print(path)
                 
@@ -59,8 +57,7 @@ class PawnAI(Pawn):
                     for j in tabEnemy:
                         if(self.get_position() != j.get_position()):
 
-                            pos_i = j.getClosestAdjacent(i.get_position(),grid)
-                            pote_proche = astar(grid, j.get_position(), pos_i)
+                            pote_proche = astar(grid, j.get_position(), i.get_position(), True)
 
                             if(len(pote_proche)<=7):
                                 groupePote.append(j)
@@ -70,13 +67,13 @@ class PawnAI(Pawn):
                     if degatsGroupe >= i.hp:
                         priority[tabPawn.index(i)] += 10
             
-            
             if priority != []:
                 target = tabPawn[priority.index(max(priority))]
 
                 if self._difference_attaque(self.att, target.defense) < self._difference_attaque(target.att, self.defense):
                     posFuite = target.getFarthestCorner(grid)
                     fuite = Pawn(posFuite[0], posFuite[1], 0, 0, 0, ENEMY)
+                    self.fuite=True
                 
                     return fuite
                 else:

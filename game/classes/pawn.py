@@ -19,15 +19,18 @@ class Pawn:
         self.team = team
         self.canMove=DISTANCE_DEPL_MAX
         self.canAttack=True
+        self.fuite=None
     
 
     
     def move(self, x2, y2,screen,grid_in):
+
         if self.team==UNIT:
-            path = astar(grid_in,self.get_position(),(x2,y2))
-        elif self.team==ENEMY:
-            pos_fin = self.getClosestAdjacent((x2,y2),grid_in)
-            path = astar(grid_in,self.get_position(),pos_fin)
+            path = astar(grid_in,self.get_position(),(x2,y2), False)
+        elif self.team==ENEMY and self.fuite==True:
+            path = astar(grid_in,self.get_position(),(x2,y2), False)
+        else:
+            path = astar(grid_in,self.get_position(),(x2,y2), True)
         print(path)
         if (self.team==UNIT and len(path) <= self.canMove + 1) or self.team==ENEMY:
             firstCase = True
@@ -146,7 +149,7 @@ class Pawn:
         options.reverse()
 
         for pos in options:
-             if (isinstance(grid[pos[1][0]][pos[1][1]], Ground)): 
+             if (not isinstance(grid[pos[1][0]][pos[1][1]], Wall)): 
                  pos_fin =  pos[1]
                  return pos_fin
         
@@ -188,14 +191,20 @@ class Node():
 
 
 
-def astar(maze, start, end):
+def astar(maze, start, end, adjacent):
     """Returns a list of tuples as a path from the given start to the given end in the given maze"""
+    
+    if adjacent == True or isinstance(maze[end[0]][end[1]], Pawn):
+        pos = Pawn(start[0], start[1], 0, 0, 0, ENEMY)
+        endAdj = pos.getClosestAdjacent(end,maze)
+        end_node = Node(None, endAdj)
+    else:
+        end_node = Node(None, end)
 
 
     # Create start and end node
     start_node = Node(None, start)
     start_node.g = start_node.h = start_node.f = 0
-    end_node = Node(None, end)
     end_node.g = end_node.h = end_node.f = 0
 
     # Initialize both open and closed list
@@ -222,6 +231,8 @@ def astar(maze, start, end):
         # Pop current off open list, add to closed list
         open_list.pop(current_index)
         closed_list.append(current_node)
+
+
 
         # Found the goal
         if current_node == end_node:
