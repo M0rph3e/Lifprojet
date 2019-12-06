@@ -30,13 +30,13 @@ def main():
 	clock = pygame.time.Clock()
 
 	pawn1 = Pawn(18, 16, 20, 15, 15, UNIT)
-	pawn2 = Pawn(16, 16, 20, 15, 15, UNIT)
-	pawn3 = Pawn(16, 18, 20, 15, 15, UNIT)
+	pawn2 = Pawn(16, 16, 20, 15, 20, UNIT)
+	pawn3 = Pawn(16, 18, 20, 15, 20, UNIT)
 		
 
 	enemy1 = PawnAI(5, 3, 15, 3, 3, ENEMY)
 	enemy2 = PawnAI(5, 5, 15, 3, 3, ENEMY)
-	enemy3 = PawnAI(7, 5, 15, 18, 18, ENEMY)
+	enemy3 = PawnAI(7, 5, 15, 18, 13, ENEMY)
 
 	tabPawn = [pawn1,pawn2,pawn3]
 	tabEnemy = [enemy1, enemy2, enemy3]
