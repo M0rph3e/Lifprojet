@@ -218,7 +218,7 @@ def astar(maze, start, end, adjacent):
     while len(open_list) > 0:
 
         if len(open_list) >= 400: #ne se deplace pas si il mets trop longtemps à chercher
-            return []
+            return [start]
 
         # Get the current node
         current_node = open_list[0]
@@ -258,9 +258,8 @@ def astar(maze, start, end, adjacent):
                 continue
             # Make sure walkable terrain
             #if (isinstance(maze[node_position[0]][node_position[1]], Wall) or isinstance(maze[node_position[0]][node_position[1]], Pawn) or isinstance(maze[node_position[0]][node_position[1]], PawnAI)):
-            if node_position[0] != end_node.position[0] or node_position[1] != end_node.position[1]:
-                if (not isinstance(maze[node_position[0]][node_position[1]], Ground)): 
-                    continue
+            if (not isinstance(maze[node_position[0]][node_position[1]], Ground)): 
+                continue
             # Create new node
             new_node = Node(current_node, node_position)
             # Append
@@ -283,6 +282,8 @@ def astar(maze, start, end, adjacent):
             
             # Add the child to the open list
             open_list.append(child)
+    return [start]
+
 
 
 

@@ -59,8 +59,9 @@ class PawnAI(Pawn):
 
                             pote_proche = astar(grid, j.get_position(), i.get_position(), True)
 
-                            if(len(pote_proche)<=7):
-                                groupePote.append(j)
+                            if pote_proche != None:
+                                if(len(pote_proche)<=7):
+                                    groupePote.append(j)
 
                     for pote in groupePote:
                         degatsGroupe += self._difference_attaque(pote.att, i.defense)

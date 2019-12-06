@@ -58,7 +58,7 @@ def main():
 			print('Au tour du Joueur')
 
 			for i in tabPawn:
-				i.canMove=7
+				i.canMove=50
 				i.canAttack=True
 
 			
@@ -170,7 +170,8 @@ def main():
 					la_mapa.grid[j.x][j.y] = la_mapa.g
 					target = j.choseTarget(tabPawn, tabEnemy, la_mapa.grid)
 					j.move(screen, la_mapa.grid,target)
-					j.attackTarget(target, tabPawn, la_mapa)	
+					if j.fuite == False:
+						j.attackTarget(target, tabPawn, la_mapa)	
 					la_mapa.add_pawn(j)
 					
 					
