@@ -68,17 +68,18 @@ class Pawn:
         return (self.x,self.y)
 
     def attack(self, pion):
-        if(self.get_adjacent(pion) and (self.team != pion.team)):	
-            print("Oponent HP", pion.hp)
-            pion.hp -= self._difference_attaque(self.att,pion.defense)
-            print("After attack", pion.hp)
-            self.canAttack=False
-            if pion.hp<=0:
-                return True
-
-            
-        else:
-            print("Il est loin pour attaquer, pelo")
+        if self.canAttack :
+            if(self.get_adjacent(pion) and (self.team != pion.team)):	
+                print("Oponent HP", pion.hp)
+                pion.hp -= self._difference_attaque(self.att,pion.defense)
+                print("After attack", pion.hp)
+                self.canAttack=False
+                if pion.hp<=0:
+                    return True      
+            else:
+                print("Il est loin pour attaquer, pelo")
+        else :
+            print("Vous avez déjà attaquer")
 
     def get_adjacent(self,pion): #verifie qu'un pion est adjacent à un autre
         diff_x = abs(self.x - pion.x)
@@ -205,7 +206,10 @@ def astar(maze, start, end):
     open_list.append(start_node)
 
     # Loop until you find the end
-    while len(open_list) > 0 :
+    while len(open_list) > 0:
+
+        if len(open_list) >= 400: #ne se deplace pas si il mets trop longtemps à chercher
+            return []
 
         # Get the current node
         current_node = open_list[0]
