@@ -146,6 +146,7 @@ def main():
 			for i in tabEnemy:
 				i.canMove=7
 				i.canAttack=True
+				i.fuite=False
 
 			
 
