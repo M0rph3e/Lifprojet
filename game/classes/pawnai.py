@@ -27,6 +27,10 @@ class PawnAI(Pawn):
         self.canAttack=True
         self.fuite = False
 
+    def move(self, x2, y2,screen,grid_in):
+        Pawn.move(self, x2, y2,screen,grid_in)
+        self.canMove=0
+
     def choseTarget(self, tabPawn, tabEnemy, grid):
         if tabPawn != []:
             priority = []
@@ -59,8 +63,9 @@ class PawnAI(Pawn):
 
                             pote_proche = astar(grid, j.get_position(), i.get_position(), True)
 
-                            if(len(pote_proche)<=7):
-                                groupePote.append(j)
+                            if pote_proche != None:
+                                if(len(pote_proche)<=7):
+                                    groupePote.append(j)
 
                     for pote in groupePote:
                         degatsGroupe += self._difference_attaque(pote.att, i.defense)
@@ -71,13 +76,13 @@ class PawnAI(Pawn):
                 target = tabPawn[priority.index(max(priority))]
 
                 if self._difference_attaque(self.att, target.defense) < self._difference_attaque(target.att, self.defense):
-                    posFuite = target.getFarthestCorner(grid)
-                    fuite = Pawn(posFuite[0], posFuite[1], 0, 0, 0, ENEMY)
-                    self.fuite=True
-                
-                    return fuite
+                    posMoy = getPositionMoy(tabPawn)
+                    posFuite = getFarthestCorner(posMoy[0], posMoy[1], grid)
+                    self.fuite = True
+                    print("posMoy : ",posMoy)
+                    return posFuite
                 else:
-                    return target
+                    return (target.x, target.y)
         else: 
             return self
         
@@ -91,20 +96,35 @@ class PawnAI(Pawn):
                         tabPawn.remove(i)
                         
 
+def get_distance(x, y, x2, y2): 
+    diff_x = abs(x - x2)
+    diff_y = abs(y - y2)
+    return diff_x + diff_y
 
-    def move(self, screen, grid_in, target):
-        dist_min = sys.maxsize
-        distance = self.get_distance(target.x,target.y)
-        if distance < dist_min:
-            dist_min=distance
-            posmin = target.get_position()
-        
-             
-        #print("Position initiale :", (self.x,self.y))
-        #print("Position finale :", posmin[0]," , ", posmin[1])
-        
-        
-        Pawn.move(self, posmin[0],posmin[1], screen, grid_in)
+def getFarthestCorner(x, y, grid):
+        topLeft=(1,1)
+        topRight=(1,18)
+        bottomLeft=(18,1)
+        bottomRight=(18,18)
 
-        self.canMove=0
+        options = []
+        
+
+        tL = get_distance(x, y, topLeft[0],topLeft[1])
+        tR = get_distance(x, y, topRight[0],topRight[1])
+        bL = get_distance(x, y, bottomLeft[0],bottomLeft[1])
+        bR = get_distance(x, y, bottomRight[0],bottomRight[1])
+
+        options.append((tL,topLeft))
+        options.append((tR,topRight))
+        options.append((bL,bottomLeft))
+        options.append((bR,bottomRight))
+
+        options.sort(key=lambda x: x[0])
+        options.reverse()
+
+        for pos in options:
+             if (not isinstance(grid[pos[1][0]][pos[1][1]], Wall)): 
+                 pos_fin =  pos[1]
+                 return pos_fin
     

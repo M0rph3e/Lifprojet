@@ -28,6 +28,7 @@ class Pawn:
         if self.team==UNIT:
             path = astar(grid_in,self.get_position(),(x2,y2), False)
         elif self.team==ENEMY and self.fuite==True:
+            print('yes')
             path = astar(grid_in,self.get_position(),(x2,y2), False)
         else:
             path = astar(grid_in,self.get_position(),(x2,y2), True)
@@ -97,7 +98,7 @@ class Pawn:
         else:
             return False
 
-    def get_distance(self,x2,y2): 
+    def get_distancePawn(self,x2,y2): 
         diff_x = abs(self.x - x2)
         diff_y = abs(self.y - y2)
         return diff_x + diff_y
@@ -110,10 +111,10 @@ class Pawn:
         bottomPos = (endPos[0],endPos[1]-1)
         topPos = (endPos[0],endPos[1]+1)
 
-        left = self.get_distance(leftPos[0],leftPos[1])
-        right = self.get_distance(rightPos[0],rightPos[1])
-        bottom = self.get_distance(bottomPos[0],bottomPos[1])
-        top = self.get_distance(topPos[0],topPos[1])
+        left = self.get_distancePawn(leftPos[0],leftPos[1])
+        right = self.get_distancePawn(rightPos[0],rightPos[1])
+        bottom = self.get_distancePawn(bottomPos[0],bottomPos[1])
+        top = self.get_distancePawn(topPos[0],topPos[1])
 
         options.append((left,leftPos))
         options.append((right,rightPos))
@@ -131,32 +132,7 @@ class Pawn:
         if pos_fin is None:
             return self.getClosestAdjacent(options[0][1],grid)
 
-    def getFarthestCorner(self,grid):
-        topLeft=(1,1)
-        topRight=(1,18)
-        bottomLeft=(18,1)
-        bottomRight=(18,18)
-
-        options = []
-        
-
-        tL = self.get_distance(topLeft[0],topLeft[1])
-        tR = self.get_distance(topRight[0],topRight[1])
-        bL = self.get_distance(bottomLeft[0],bottomLeft[1])
-        bR = self.get_distance(bottomRight[0],bottomRight[1])
-
-        options.append((tL,topLeft))
-        options.append((tR,topRight))
-        options.append((bL,bottomLeft))
-        options.append((bR,bottomRight))
-
-        options.sort(key=lambda x: x[0])
-        options.reverse()
-
-        for pos in options:
-             if (not isinstance(grid[pos[1][0]][pos[1][1]], Wall)): 
-                 pos_fin =  pos[1]
-                 return pos_fin
+    
         
 
 
@@ -263,9 +239,8 @@ def astar(maze, start, end, adjacent):
                 continue
             # Make sure walkable terrain
             #if (isinstance(maze[node_position[0]][node_position[1]], Wall) or isinstance(maze[node_position[0]][node_position[1]], Pawn) or isinstance(maze[node_position[0]][node_position[1]], PawnAI)):
-            if node_position[0] != end_node.position[0] or node_position[1] != end_node.position[1]:
-                if (not isinstance(maze[node_position[0]][node_position[1]], Ground)): 
-                    continue
+            if (not isinstance(maze[node_position[0]][node_position[1]], Ground)): 
+                continue
             # Create new node
             new_node = Node(current_node, node_position)
             # Append
@@ -288,6 +263,8 @@ def astar(maze, start, end, adjacent):
             
             # Add the child to the open list
             open_list.append(child)
+    return [start]
+
 
 
 

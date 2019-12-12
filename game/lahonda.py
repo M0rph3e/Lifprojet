@@ -58,7 +58,7 @@ def main():
 			print('Au tour du Joueur')
 
 			for i in tabPawn:
-				i.canMove=7
+				i.canMove=50
 				i.canAttack=True
 
 			
@@ -146,8 +146,7 @@ def main():
 			for i in tabEnemy:
 				i.canMove=7
 				i.canAttack=True
-				i.fuite=False
-
+				i.fuite = False
 			
 
 			
@@ -167,10 +166,15 @@ def main():
 
 				#permet de faire bouger les pions ennemis 
 				for j in tabEnemy:
+					pawnTarget = None
 					la_mapa.grid[j.x][j.y] = la_mapa.g
 					target = j.choseTarget(tabPawn, tabEnemy, la_mapa.grid)
-					j.move(screen, la_mapa.grid,target)
-					j.attackTarget(target, tabPawn, la_mapa)	
+					for p in tabPawn:
+						if la_mapa.grid[target[0]][target[1]]==p:
+							pawnTarget = p
+					j.move(target[0], target[1], screen, la_mapa.grid)
+					if not j.fuite:
+						j.attackTarget(pawnTarget, tabPawn, la_mapa)
 					la_mapa.add_pawn(j)
 					
 					
