@@ -15,8 +15,8 @@ class Map:
 		
 		self.grid = [[self.w, self.w, self.w, self.w, self.w, self.w, self.w, self.w, self.w, self.w, self.w, self.w, self.w, self.w, self.w, self.w, self.w, self.w, self.w, self.w],
 					 [self.w, self.g, self.g, self.g, self.g, self.g, self.g, self.g, self.g, self.g, self.g, self.g, self.g, self.g, self.g, self.g, self.g, self.g, self.g, self.w],
-					 [self.w, self.g, self.g, self.g, self.g, self.g, self.g, self.g, self.g, self.g, self.g, self.g, self.g, self.g, self.g, self.g, self.w, self.g, self.g, self.w],
-					 [self.w, self.g, self.g, self.g, self.g, self.g, self.g, self.g, self.g, self.g, self.g, self.g, self.g, self.g, self.g, self.g, self.w, self.g, self.g, self.w],
+					 [self.w, self.g, self.g, self.g, self.g, self.w, self.g, self.g, self.g, self.g, self.g, self.g, self.g, self.g, self.g, self.g, self.w, self.g, self.g, self.w],
+					 [self.w, self.g, self.g, self.g, self.g, self.w, self.g, self.g, self.g, self.g, self.g, self.g, self.g, self.g, self.g, self.g, self.w, self.g, self.g, self.w],
 					 [self.w, self.w, self.w, self.w, self.w, self.w, self.g, self.g, self.w, self.w, self.g, self.g, self.g, self.g, self.g, self.g, self.w, self.g, self.g, self.w],
 					 [self.w, self.g, self.g, self.g, self.g, self.g, self.g, self.g, self.w, self.w, self.g, self.g, self.g, self.g, self.g, self.g, self.w, self.g, self.g, self.w],
 					 [self.w, self.g, self.g, self.g, self.g, self.g, self.g, self.g, self.w, self.w, self.g, self.g, self.g, self.g, self.g, self.g, self.w, self.g, self.g, self.w],

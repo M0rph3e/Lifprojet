@@ -78,7 +78,12 @@ class Pawn:
                 print("After attack", pion.hp)
                 self.canAttack=False
                 if pion.hp<=0:
-                    return True      
+                    return True
+                else : #S'il ne le tue pas l'adversaire replique  
+                    print("Your HP", self.hp) 
+                    self.hp -= self._difference_attaque(pion.att,self.defense) 
+                    print("After attack", self.hp)
+
             else:
                 print("Il est loin pour attaquer, pelo")
         else :
@@ -218,7 +223,7 @@ def astar(maze, start, end, adjacent):
     while len(open_list) > 0:
 
         if len(open_list) >= 400: #ne se deplace pas si il mets trop longtemps à chercher
-            return []
+            return [start]
 
         # Get the current node
         current_node = open_list[0]
