@@ -73,12 +73,9 @@ class PawnAI(Pawn):
 
                 if self._difference_attaque(self.att, target.defense) < self._difference_attaque(target.att, self.defense):
                     posFuite = target.getFarthestCorner(grid)
-                    fuite = Pawn(posFuite[0], posFuite[1], 0, 0, 0, ENEMY)
-                    self.fuite=True
-                
-                    return fuite
+                    return posFuite
                 else:
-                    return target
+                    return (target.x, target.y)
         else: 
             return self
         
@@ -93,19 +90,5 @@ class PawnAI(Pawn):
                         
 
 
-    def move(self, screen, grid_in, target):
-        dist_min = sys.maxsize
-        distance = self.get_distance(target.x,target.y)
-        if distance < dist_min:
-            dist_min=distance
-            posmin = target.get_position()
-        
-             
-        #print("Position initiale :", (self.x,self.y))
-        #print("Position finale :", posmin[0]," , ", posmin[1])
-        
-        
-        Pawn.move(self, posmin[0],posmin[1], screen, grid_in)
 
-        self.canMove=0
     
