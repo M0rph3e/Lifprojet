@@ -146,7 +146,7 @@ def main():
 			for i in tabEnemy:
 				i.canMove=7
 				i.canAttack=True
-
+				i.fuite = False
 			
 
 			
@@ -173,8 +173,8 @@ def main():
 						if la_mapa.grid[target[0]][target[1]]==p:
 							pawnTarget = p
 					j.move(target[0], target[1], screen, la_mapa.grid)
-					if j.fuite:
-						j.attackTarget(pawnTarget, tabPawn, la_mapa)	
+					if not j.fuite:
+						j.attackTarget(pawnTarget, tabPawn, la_mapa)
 					la_mapa.add_pawn(j)
 					
 					
