@@ -14,7 +14,7 @@ DISTANCE_DEPL_MAX=7
 
 
 class PawnAI(Pawn):
-    def __init__(self, x, y, hp, att, defense, team):
+    def __init__(self, x, y, hp, att, defense, team,type):
         self.x = x
         self.y = y
         self.defense=defense
@@ -26,6 +26,7 @@ class PawnAI(Pawn):
         self.canMove=DISTANCE_DEPL_MAX
         self.canAttack=True
         self.fuite = False
+        self.type=type
 
     def move(self, x2, y2,screen,grid_in):
         Pawn.move(self, x2, y2,screen,grid_in)

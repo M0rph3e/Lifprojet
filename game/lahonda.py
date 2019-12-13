@@ -174,7 +174,7 @@ def main():
 					la_mapa.add_pawn(j)
 					
 					
-					
+		
 					
 
 

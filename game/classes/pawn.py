@@ -8,7 +8,7 @@ from threading import Thread
 DISTANCE_DEPL_MAX=7
 
 class Pawn:
-    def __init__(self, x, y, hp, att, defense, team):
+    def __init__(self, x, y, hp, att, defense, team, type):
         self.x = x
         self.y = y
         self.defense=defense
@@ -20,6 +20,7 @@ class Pawn:
         self.canMove=DISTANCE_DEPL_MAX
         self.canAttack=True
         self.fuite=None
+        self.type = type
     
 
     
