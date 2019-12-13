@@ -102,7 +102,7 @@ class Pawn:
 
                 res = self.calculResistance(pion)
                 print("Defender HP", pion.hp)
-                pion.hp -= self._difference_attaque(self.att,pion.defense) * res
+                pion.hp -= round(self._difference_attaque(self.att,pion.defense) * res)
                 print("After attack", pion.hp)
                 self.canAttack=False
                 if pion.hp<=0:
@@ -110,7 +110,7 @@ class Pawn:
                 
                 else : #S'il ne le tue pas l'adversaire replique  
                     print("Attacker HP", self.hp) 
-                    self.hp -= self._difference_attaque(pion.att,self.defense) * res
+                    self.hp -= round(self._difference_attaque(pion.att,self.defense) * res)
                     print("After reply", self.hp)
 
             else:
