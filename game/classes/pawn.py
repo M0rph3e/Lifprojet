@@ -204,7 +204,7 @@ def astar(maze, start, end, adjacent):
     """Returns a list of tuples as a path from the given start to the given end in the given maze"""
     
     if adjacent == True or isinstance(maze[end[0]][end[1]], Pawn):
-        pos = Pawn(start[0], start[1], 0, 0, 0, ENEMY)
+        pos = Pawn(start[0], start[1], 0, 0, 0, None, None)
         endAdj = pos.getClosestAdjacent(end,maze)
         end_node = Node(None, endAdj)
     else:
