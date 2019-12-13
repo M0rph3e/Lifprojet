@@ -71,19 +71,46 @@ class Pawn:
     def get_position(self):
         return (self.x,self.y)
 
+    def calculResistance(self, pion):
+        if self.type == EPEE:
+            if pion.type == LANCE:
+                return 1.20
+            elif pion.type == HACHE:
+                return 0.80
+            else:
+                return 1
+        if self.type == LANCE:
+            if pion.type == HACHE:
+                return 1.20
+            elif pion.type == EPEE:
+                return 0.80
+            else:
+                return 1
+        if self.type == HACHE:
+            if pion.type == EPEE:
+                return 1.20
+            elif pion.type == LANCE:
+                return 0.80
+            else:
+                return 1
+
+
     def attack(self, pion):
         if self.canAttack :
-            if(self.get_adjacent(pion) and (self.team != pion.team)):	
-                print("Oponent HP", pion.hp)
-                pion.hp -= self._difference_attaque(self.att,pion.defense)
+            if(self.get_adjacent(pion) and (self.team != pion.team)):
+
+                res = self.calculResistance(pion)
+                print("Defender HP", pion.hp)
+                pion.hp -= self._difference_attaque(self.att,pion.defense) * res
                 print("After attack", pion.hp)
                 self.canAttack=False
                 if pion.hp<=0:
                     return True
+                
                 else : #S'il ne le tue pas l'adversaire replique  
-                    print("Your HP", self.hp) 
-                    self.hp -= self._difference_attaque(pion.att,self.defense) 
-                    print("After attack", self.hp)
+                    print("Attacker HP", self.hp) 
+                    self.hp -= self._difference_attaque(pion.att,self.defense) * res
+                    print("After reply", self.hp)
 
             else:
                 print("Il est loin pour attaquer, pelo")
@@ -132,11 +159,11 @@ class Pawn:
         if pos_fin is None:
             return self.getClosestAdjacent(options[0][1],grid)
 
+    def afficherStats(self):
+        print("HP :", self.hp)
+        print("Attack :", self.att)
+        print("Defense :", self.defense)
     
-        
-
-
-
     #Cette méthode permet de faire la différence entre l'attaque de l'attaquant et la défense de celui qui est attaqué,
     # elle permet de traité le cas ou défense>attaque qui renverra 0 au lieu d'un nb négatif (rajoutant des pv)
     def _difference_attaque(self, attaque, defense):
