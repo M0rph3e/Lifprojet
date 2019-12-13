@@ -35,6 +35,11 @@ GROUND = (170,110,80)
 UNIT = Color (100,100,255)
 ENEMY = Color(255,100,100)
 
+HACHE = (75,125,0)
+EPEE = (125,0,0)
+LANCE = (0,50,125) 
+
+
 def getPositionMoy(tabPawn):
     posX = 0
     posY = 0
