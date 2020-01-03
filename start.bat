@@ -1,2 +1,2 @@
-cd C:\Coding\Lahonda\lifprojet\game
+cd .\game
 py lahonda.py

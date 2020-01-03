@@ -12,7 +12,7 @@ import os
 import sys
 
 WIDTH = 400 
-HEIGHT = 400
+HEIGHT = 800
 CELLWIDTH = 20
 CELLHEIGHT = 20
 
@@ -20,8 +20,100 @@ CELLHEIGHT = 20
 #Variables globales
 FPS = 60
 
-def main():
-	pygame.init()
+def menu():
+	done = False
+	game_on = False
+	while(not done):
+
+		screen = pygame.display.set_mode((HEIGHT, WIDTH))
+		font1 = pygame.font.SysFont("comicsansms", 50)
+		font2 = pygame.font.SysFont("comicsansms", 25)
+
+		hello = font1.render("Lahonda", True, (255, 0, 0))
+		enter = font2.render("Press Enter to Start", True, (255, 0, 0))
+		screen.blit(hello, (WIDTH*0.50, HEIGHT*0.20))
+		screen.blit(enter, (WIDTH*0.45, HEIGHT*0.40)) 
+
+		for event in pygame.event.get():
+			if (event.type == pygame.QUIT):
+				done = True
+								
+			if (event.type == pygame.KEYDOWN):
+				if event.key == pygame.K_ESCAPE:
+					done = True
+
+				if event.key == pygame.K_RETURN or event.key == pygame.K_KP_ENTER:
+					game_on = True
+					done = True
+
+		pygame.display.flip()
+	
+	if(game_on == True):
+		game()
+
+def lose():
+	done = False
+	game_on = False
+	while(not done):
+
+		screen = pygame.display.set_mode((HEIGHT, WIDTH))
+		font1 = pygame.font.SysFont("comicsansms", 50)
+		font2 = pygame.font.SysFont("comicsansms", 25)
+
+		hello = font1.render("Loser", True, (255, 0, 0))
+		enter = font2.render("Press Enter to Restart", True, (255, 0, 0))
+		screen.blit(hello, (WIDTH*0.50, HEIGHT*0.20))
+		screen.blit(enter, (WIDTH*0.45, HEIGHT*0.40))
+
+		for event in pygame.event.get():
+			if (event.type == pygame.QUIT):
+				done = True
+								
+			if (event.type == pygame.KEYDOWN):
+				if event.key == pygame.K_ESCAPE:
+					done = True
+
+				if event.key == pygame.K_RETURN or event.key == pygame.K_KP_ENTER:
+					game_on = True
+					done = True
+
+		pygame.display.flip()
+	
+	if(game_on == True):
+		game()
+
+def win():
+	done = False
+	game_on = False
+	while(not done):
+
+		screen = pygame.display.set_mode((HEIGHT, WIDTH))
+		font1 = pygame.font.SysFont("comicsansms", 50)
+		font2 = pygame.font.SysFont("comicsansms", 25)
+
+		hello = font1.render("Nice", True, (255, 0, 0))
+		enter = font2.render("Press Enter to Restart", True, (255, 0, 0))
+		screen.blit(hello, (WIDTH*0.50, HEIGHT*0.20))
+		screen.blit(enter, (WIDTH*0.45, HEIGHT*0.40)) 
+
+		for event in pygame.event.get():
+			if (event.type == pygame.QUIT):
+				done = True
+								
+			if (event.type == pygame.KEYDOWN):
+				if event.key == pygame.K_ESCAPE:
+					done = True
+
+				if event.key == pygame.K_RETURN or event.key == pygame.K_KP_ENTER:
+					game_on = True
+					done = True
+
+		pygame.display.flip()
+	
+	if(game_on == True):
+		game()
+
+def game():
 	
 	pygame.display.set_caption("Lahonda")
 
@@ -41,18 +133,28 @@ def main():
 	tabPawn = [pawn1,pawn2,pawn3]
 	tabEnemy = [enemy1, enemy2, enemy3]
 
+
+
+
+	
+
 	la_mapa = Map(CELLWIDTH, CELLHEIGHT)
+
 
 	cursorMain = Cursor()
 	
 	done = False
-
+	el_wino = False
+	la_luso = False
 	tour = 1
 	#Boucle principale de jeu
 	while not done:
-		
+		screen.fill(BLACK)
 		#Ceci permet de limiter le FPS dans jeu
 		clock.tick(FPS)
+
+
+
 		###### TOUR JOUEUR ######
 		if tour == 1:
 			print('Au tour du Joueur')
@@ -61,17 +163,10 @@ def main():
 				i.canMove=7
 				i.canAttack=True
 
-			
-			#pawn2.getClosestAdjacent(enemy2.get_position(),la_mapa.grid)
-
 			while tour == 1:
-
-				
-
 				screen.fill(BLACK)
-
-				if(tabPawn == [] or tabEnemy == []):
-					done = True
+				
+				if(done==True):
 					break
 
 				for i in tabPawn:
@@ -80,18 +175,52 @@ def main():
 				for i in tabEnemy:
 					la_mapa.add_pawn(i)
 
+				#if(tabEnemy == []):	
+				#	el_wino = True
+				#	break
+				
+				#if(tabPawn == []):
+				#	la_luso = True
+				#	break				
+
 				la_mapa.draw_grid(screen)
+				#font1 = pygame.font.SysFont("comicsansms", 25)
+				#title = font1.render("Lahonda", True, (255, 0, 0))
+				#screen.blit(title, (WIDTH*1.1, HEIGHT*0.01))
+
+				for i in range(0, len(tabPawn)):
+					
+					font1 = pygame.font.SysFont("comicsansms", 30)
+					players_2 = font1.render("Players", True, (255, 0, 0))
+					screen.blit(players_2, (WIDTH*1.025, HEIGHT*0.040))
+
+					text = "P{} - hp: {} att: {} def: {} move:{}".format(i+1,tabPawn[i].hp,tabPawn[i].att,tabPawn[i].defense,tabPawn[i].canMove)
+					font2 = pygame.font.SysFont("comicsansms", 15)
+					players = font2.render(text, True, (255, 0, 0))
+					screen.blit(players, (WIDTH*1.025, HEIGHT*0.1 + HEIGHT*0.035*i))
+
+				for i in range(0, len(tabEnemy)):
+					font1 = pygame.font.SysFont("comicsansms", 30)
+					enemies = font1.render("AI Players", True, (255, 0, 0))
+					screen.blit(enemies, (WIDTH*1.025, HEIGHT*0.235))
+					
+					text = "AI{} - hp: {} att: {} def: {} move:{}".format(i+1,tabEnemy[i].hp,tabEnemy[i].att,tabEnemy[i].defense,tabEnemy[i].canMove)
+					font2 = pygame.font.SysFont("comicsansms", 15)
+					players = font2.render(text, True, (255, 0, 0))
+					screen.blit(players, (WIDTH*1.025, HEIGHT*0.30 + HEIGHT*0.035*i))
+
+				
 
 				#Gestion des evenements
 				for event in pygame.event.get():
 						if (event.type == pygame.QUIT):
-							pygame.quit()
-							sys.exit()
+							done = True
+							
 
 						if (event.type == pygame.KEYDOWN):
 							if event.key == pygame.K_ESCAPE:
-								pygame.quit()
-								sys.exit()
+								done = True
+								
 							if event.key == pygame.K_p:
 								tour = 2
 							if event.key == pygame.K_d:
@@ -139,17 +268,27 @@ def main():
 		###### TOUR IA ######
 		if tour == 2:
 			print("Au tour de l'IA")
+
+			if(done==True):
+				break
+
 			for i in tabEnemy:
 				i.canMove=7
 				i.canAttack=True
 				i.fuite = False
-			
 
+			if(tabEnemy == []):	
+				el_wino = True
+				break
+			
+			if(tabPawn == []):
+				la_luso = True
+				break
 			
 
 			while tour == 2:
 				screen.fill(BLACK)
-		
+				
 				for i in tabPawn:
 					la_mapa.add_pawn(i)
 		
@@ -158,7 +297,25 @@ def main():
 
 				la_mapa.draw_grid(screen)
 
-				
+				for i in range(0, len(tabPawn)):
+					font1 = pygame.font.SysFont("comicsansms", 30)
+					players_2 = font1.render("Players", True, (255, 0, 0))
+					screen.blit(players_2, (WIDTH*1.025, HEIGHT*0.040))
+
+					text = "P{} - hp: {} att: {} def: {} move:{}".format(i+1,tabPawn[i].hp,tabPawn[i].att,tabPawn[i].defense,tabPawn[i].canMove)
+					font2 = pygame.font.SysFont("comicsansms", 15)
+					players = font2.render(text, True, (255, 0, 0))
+					screen.blit(players, (WIDTH*1.025, HEIGHT*0.1 + HEIGHT*0.035*i))
+
+				for i in range(0, len(tabEnemy)):
+					font1 = pygame.font.SysFont("comicsansms", 30)
+					enemies = font1.render("AI Players", True, (255, 0, 0))
+					screen.blit(enemies, (WIDTH*1.025, HEIGHT*0.235))
+
+					text = "AI{} - hp: {} att: {} def: {} move:{}".format(i+1,tabEnemy[i].hp,tabEnemy[i].att,tabEnemy[i].defense,tabEnemy[i].canMove)
+					font2 = pygame.font.SysFont("comicsansms", 15)
+					players = font2.render(text, True, (255, 0, 0))
+					screen.blit(players, (WIDTH*1.025, HEIGHT*0.30 + HEIGHT*0.035*i))			
 
 				#permet de faire bouger les pions ennemis 
 				for j in tabEnemy:
@@ -187,13 +344,22 @@ def main():
 
 				if all(enemy.canMove == 0 for enemy in tabEnemy):
 					tour=1
+	
+	print('FIN DE LA PARTIE')
 
-				if(tabPawn == [] or tabEnemy == []):
-					done = True
-					break
-					
+	if(el_wino == True):
+		win()
+	if(la_luso == True):
+		lose()
 
-	print('FIN DE LA PARTIE')				
+
+def main():
+
+	pygame.init()
+	print("1")
+	menu()
+
+	print("2")
 
 	pygame.quit()
 

@@ -70,6 +70,7 @@ class PawnAI(Pawn):
 
                     for pote in groupePote:
                         degatsGroupe += self._difference_attaque(pote.att, i.defense)
+                        
                     if degatsGroupe >= i.hp:
                         priority[tabPawn.index(i)] += 10
             
