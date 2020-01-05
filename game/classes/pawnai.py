@@ -77,7 +77,7 @@ class PawnAI(Pawn):
             if priority != []:
                 target = tabPawn[priority.index(max(priority))]
 
-                if self._difference_attaque(self.att, target.defense) < self._difference_attaque(target.att, self.defense):
+                if self._difference_attaque(target.att, self.defense) >= self.hp:
                     posMoy = getPositionMoy(tabPawn)
                     posFuite = getFarthestCorner(posMoy[0], posMoy[1], grid)
                     self.fuite = True
