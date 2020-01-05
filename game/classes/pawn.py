@@ -64,6 +64,7 @@ class Pawn:
 
     def draw_pawn(self, screen, height, width):	
         self.rect = pygame.draw.rect(screen, self.team, (self.x * height, self.y * width, width, height))
+        pygame.draw.rect(screen, self.type, (self.x * height, self.y * width, width, height),1)
     
     def remove_pawn(self, screen, height, width):
         pygame.draw.rect(screen, BLACK, (self.x * height, self.y * width, width, height))	
@@ -177,6 +178,17 @@ class Pawn:
 
     def get_traversable(self):
         return False
+
+    def get_type(self):
+        if self.type == HACHE:
+            return "HACHE"
+        elif self.type == EPEE:
+            return "EPEE"
+        elif self.type == LANCE:
+            return "LANCE"
+        else:
+            return "Type invalide"
+                
 
 #Cette partie est consacrée à l'algo de pathfinding 
 

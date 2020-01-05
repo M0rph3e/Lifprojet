@@ -194,7 +194,7 @@ def game():
 					players_2 = font1.render("Players", True, (255, 0, 0))
 					screen.blit(players_2, (WIDTH*1.025, HEIGHT*0.040))
 
-					text = "P{} - hp: {} att: {} def: {} move:{}".format(i+1,tabPawn[i].hp,tabPawn[i].att,tabPawn[i].defense,tabPawn[i].canMove)
+					text = "P{} - Type :{} - hp: {} att: {} def: {} move:{}".format(i+1,tabPawn[i].get_type(),tabPawn[i].hp,tabPawn[i].att,tabPawn[i].defense,tabPawn[i].canMove)
 					font2 = pygame.font.SysFont("comicsansms", 15)
 					players = font2.render(text, True, (255, 0, 0))
 					screen.blit(players, (WIDTH*1.025, HEIGHT*0.1 + HEIGHT*0.035*i))
@@ -204,7 +204,7 @@ def game():
 					enemies = font1.render("AI Players", True, (255, 0, 0))
 					screen.blit(enemies, (WIDTH*1.025, HEIGHT*0.235))
 					
-					text = "AI{} - hp: {} att: {} def: {} move:{}".format(i+1,tabEnemy[i].hp,tabEnemy[i].att,tabEnemy[i].defense,tabEnemy[i].canMove)
+					text = "AI{} - Type :{} - hp: {} att: {} def: {} move:{}".format(i+1,tabEnemy[i].get_type(),tabEnemy[i].hp,tabEnemy[i].att,tabEnemy[i].defense,tabEnemy[i].canMove)
 					font2 = pygame.font.SysFont("comicsansms", 15)
 					players = font2.render(text, True, (255, 0, 0))
 					screen.blit(players, (WIDTH*1.025, HEIGHT*0.30 + HEIGHT*0.035*i))
