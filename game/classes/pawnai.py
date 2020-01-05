@@ -58,6 +58,11 @@ class PawnAI(Pawn):
                 
                 priority[tabPawn.index(i)] -= i.hp * 2
 
+                if self.calculResistance(i) == 1.2:
+                    priority[tabPawn.index(i)]+=5
+                elif self.calculResistance(i) == 0.8:
+                    priority[tabPawn.index(i)]-=5
+
                 if(self._difference_attaque(self.att, i.defense)<8):
                     for j in tabEnemy:
                         if(self.get_position() != j.get_position()):
