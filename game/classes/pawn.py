@@ -75,23 +75,23 @@ class Pawn:
 
     def calculResistance(self, pion):
         if self.type == EPEE:
-            if pion.type == LANCE:
+            if pion.type == HACHE:
+                return 1.20
+            elif pion.type == LANCE:
+                return 0.80
+            else:
+                return 1
+        if self.type == LANCE:
+            if pion.type == EPEE:
                 return 1.20
             elif pion.type == HACHE:
                 return 0.80
             else:
                 return 1
-        if self.type == LANCE:
-            if pion.type == HACHE:
+        if self.type == HACHE:
+            if pion.type == LANCE:
                 return 1.20
             elif pion.type == EPEE:
-                return 0.80
-            else:
-                return 1
-        if self.type == HACHE:
-            if pion.type == EPEE:
-                return 1.20
-            elif pion.type == LANCE:
                 return 0.80
             else:
                 return 1
