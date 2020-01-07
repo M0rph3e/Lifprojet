@@ -1,16 +1,28 @@
+Objectif : Lâ€™objectif de ce projet est de proposer une modÃ©lisation distribuÃ©e dâ€™un jeu stratÃ©gique dans lequel des mÃ©thodes de rÃ©solutions stratÃ©giques seront implÃ©ment au sein de ce jeu.
+
+
+
 Prerequis avant de pouvoir lancer le jeu :
-Avoir installé python (version 3 ou +) ainsi que la bibliothèque Pygame.
+Avoir installÃ© python (version 3 ou +) ainsi que la bibliothÃ¨que Pygame.
 
-Lancez le fichier start.bat ou compilez le fichier lahonda.py situé dans le dossier game
-Les classes utilisés sont dans le dossier classes.
+Lancez le fichier start.bat ou compilez le fichier lahonda.py situÃ© dans le dossier game
 
-Les règles du jeu sont les suivantes :
-•	Vous contrôlez trois joueurs (en bleu), votre but est d’éliminer les adversaires (en rouge) qui seront contrôlés par IA (réalisant des raisonnements stratégiques).
-•	Vous pouvez attaquer un ennemi que s’il est adjacent. Cet ennemi répliquera.
-•	Chaque unité possède un type d’armes caractérisé par une couleur (ROUGE pour Epée, VERT pour Hache et BLEU pour Lance). Un triangle des armes est mis en place donnant un bonus/malus de 20% de dégâts en fonctions des armes utilisées.
-•	Les dégâts sont calculés en fonctions des statistiques d’attaques et de défenses et d’un avantage/désavantage tactique en fonction des types d’armes des unités.
+Les rÃ¨gles du jeu sont les suivantes :
+â€¢	Vous contrÃ´lez trois joueurs (en bleu), votre but est dâ€™Ã©liminer les adversaires (en rouge) qui seront contrÃ´lÃ©s par IA (rÃ©alisant des raisonnements stratÃ©giques).
+â€¢	Vous pouvez attaquer un ennemi que sâ€™il est adjacent. Cet ennemi rÃ©pliquera.
+â€¢	Chaque unitÃ© possÃ¨de un type dâ€™armes caractÃ©risÃ© par une couleur (ROUGE pour EpÃ©e, VERT pour Hache et BLEU pour Lance). Un triangle des armes est mis en place donnant un bonus/malus de 20% de dÃ©gÃ¢ts en fonctions des armes utilisÃ©es.
+â€¢	Les dÃ©gÃ¢ts sont calculÃ©s en fonctions des statistiques dâ€™attaques et de dÃ©fenses et dâ€™un avantage/dÃ©savantage tactique en fonction des types dâ€™armes des unitÃ©s.
 
 Comment jouer :
 
-•	Vous déplacez les unités et attaquez avec le curseur. Pour finir votre tour, appuyez sur le bouton « P » de votre clavier.
-•	Vous pouvez vous déplacer de 7 cases et attaquez une seule fois par tour et par joueur.
+â€¢	Vous dÃ©placez les unitÃ©s et attaquez avec le curseur. Pour finir votre tour, appuyez sur le bouton Â« P Â» de votre clavier.
+â€¢	Vous pouvez vous dÃ©placer de 7 cases et attaquez une seule fois par tour et par joueur.
+
+Les classes utilisÃ©s sont dans le dossier classes. Vous y trouverez :
+â€¢	un fichier colors.py permettant de definir des constantes de couleurs
+â€¢	un fichier cursor.py permettant de gÃ©rer l'utilisation du curseur dans le jeu
+â€¢	un fichier ground.py une classe sol
+â€¢	un fichier wall.py une classe mur
+â€¢	un fichier map.py la carte du jeu composÃ© de sol,mur et d'unitÃ©s
+â€¢	un fichier pawn.py classe materialisant les unitÃ©s (du joueur)
+â€¢	un fichier pawnai.py classe heritant de pawn matÃ©rialisant les unitÃ©s IA du jeu
