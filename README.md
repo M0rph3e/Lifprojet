@@ -1,5 +1,5 @@
 # Objectif
-L’objectif de ce projet est de proposer une modélisation distribuée d’un jeu stratégique dans lequel des méthodes de résolutions stratégiques seront implément au sein de ce jeu.
+L’objectif de ce projet est de proposer une modélisation distribuée d’un jeu stratégique dans lequel des méthodes de résolutions stratégiques seront implémentées au sein de ce jeu.
 
 
 
